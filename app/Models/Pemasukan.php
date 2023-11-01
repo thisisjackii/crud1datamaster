@@ -14,6 +14,8 @@ class Pemasukan extends Model
      *
      * @var array<int, string>
      */
+
+    protected $table = 'pemasukan';
     protected $fillable = [
         'nama_kategori',
         'rekening',
