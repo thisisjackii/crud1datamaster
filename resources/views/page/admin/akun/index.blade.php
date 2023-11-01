@@ -1,4 +1,5 @@
-@extends('layouts.base_admin.base_dashboard')@section('judul', 'List Akun')
+@extends('layouts.base_admin.base_dashboard')
+@section('judul', 'List Akun')
 @section('script_head')
 <link
     rel="stylesheet"
