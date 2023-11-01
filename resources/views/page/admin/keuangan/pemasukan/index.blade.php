@@ -82,7 +82,7 @@
                     "data": "rekening"
                 }, {
                     "data": "jumlah_pemasukan"
-                }. {
+                }, {
                     "data": "catatan_pemasukan"
                 }, {
                     "data": "tanggal"
