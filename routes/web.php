@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AkunController;
+use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PengeluaranController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -39,5 +41,27 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::match(['get','post'],'tambah', 'tambahAkun')->name('add');
             Route::match(['get','post'],'{id}/ubah', 'ubahAkun')->name('edit');
             Route::delete('{id}/hapus', 'hapusAkun')->name('delete');
+        });
+
+    Route::controller(PemasukanController::class)
+        ->prefix('pemasukan')
+        ->as('pemasukan.')
+        ->group(function () {
+           Route::get('/', 'index')->name('index');
+           Route::post('showdata', 'dataTable')->name('dataTable');
+           Route::match(['get','post'],'tambah', 'tambahPemasukan')->name('add');
+           Route::match(['get','post'],'{id}/ubah', 'ubahPemasukan')->name('edit');
+           Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
+        });
+
+    Route::controller(PengeluaranController::class)
+        ->prefix('pengeluaran')
+        ->as('pengeluaran.')
+        ->group(function () {
+           Route::get('/', 'index')->name('index');
+           Route::post('showdata', 'dataTable')->name('dataTable');
+           Route::match(['get','post'],'tambah', 'tambahPengeluaran')->name('add');
+           Route::match(['get','post'],'{id}/ubah', 'ubahPengeluaran')->name('edit');
+           Route::delete('{id}/hapus', 'hapusPengeluaran')->name('delete');
         });
 });
