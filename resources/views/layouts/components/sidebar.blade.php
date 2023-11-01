@@ -22,6 +22,40 @@ $links = [
                 "section_href" => route('akun.add')
             ]
         ]
+    ],
+    [
+        "text" => "Kelola Pemasukan",
+        "icon" => "fas fa-users",
+        "is_multi" => true,
+        "href" => [
+            [
+                "section_text" => "Data Pemasukan",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('pemasukan.index')
+            ],
+            [
+                "section_text" => "Tambah Pemasukan",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('pemasukan.add')
+            ]
+        ]
+    ],
+    [
+        "text" => "Kelola Pengeluaran",
+        "icon" => "fas fa-users",
+        "is_multi" => true,
+        "href" => [
+            [
+                "section_text" => "Data Pengeluaran",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('pengeluaran.index')
+            ],
+            [
+                "section_text" => "Tambah Akun",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('pengeluaran.add')
+            ]
+        ]
     ]
 ];
 $navigation_links = json_decode(json_encode($links));
