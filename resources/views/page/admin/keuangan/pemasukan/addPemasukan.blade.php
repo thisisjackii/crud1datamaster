@@ -1,63 +1,179 @@
-@extends('layouts.base_admin.base_dashboard')
-@section('judul', 'Tambah Pemasukan')
+@extends('layouts.base_admin.base_dashboard') @section('judul', 'Tambah Pemasukan')
 @section('content')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Tambah Pemasukan</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">Beranda</a>
-                        </li>
-                        <li class="breadcrumb-item active">Tambah Pemasukan</li>
-                    </ol>
-                </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Tambah Pemasukan</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item active">Tambah Pemasukan</li>
+                </ol>
             </div>
         </div>
-    </section>
+    </div>
+    <!-- /.container-fluid -->
+</section>
 
-    <section class="content">
-        <div class="card">
-            <div class="card-body">
-                <form action="{{ route('pemasukan.add') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="nama_kategori">Nama Kategori Pemasukan</label>
-                        <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" required>
+<!-- Main content -->
+<section class="content">
+    @if(session('status'))
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+        {{ session('status') }}
+      </div>
+    @endif
+    <form method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Informasi Pemasukan</h3>
+
+                        <div class="card-tools">
+                            <button
+                                type="button"
+                                class="btn btn-tool"
+                                data-card-widget="collapse"
+                                title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="rekening">Pilih Rekening</label>
-                        <select class="form-control" id="rekening" name="rekening" required>
-                            <option value="BCA">BCA (Bank Central Asia)</option>
-                            <option value="BRI">BRI (Bank Rakyat Indonesia)</option>
-                            <option value="BNI">BNI (Bank Negara Indonesia)</option>
-                            <option value="Mandiri">Mandiri (Bank Mandiri)</option>
-                            <option value="CIMB">CIMB Niaga</option>
-                            <option value="Maybank">Maybank Indonesia</option>
-                        </select>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputName">Nama Kategori</label>
+                            <input
+                                type="text"
+                                id="inputName"
+                                name="nama_kategori"
+                                class="form-control @error('nama_kategori') is-invalid @enderror"
+                                placeholder="Masukkan Nama"
+                                value="{{ old('nama_kategori') }}"
+                                required="required"
+                                autocomplete="nama_kategori">
+                            @error('nama_kategori')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">Rekening</label>
+                            <input
+                                type="text"
+                                id="inputName"
+                                name="rekening"
+                                class="form-control @error('rekening') is-invalid @enderror"
+                                placeholder="Masukkan Nama"
+                                value="{{ old('rekening') }}"
+                                required="required"
+                                autocomplete="rekening">
+                            @error('rekening')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">jumlah_pemasukan</label>
+                            <input
+                                type="text"
+                                id="inputName"
+                                name="jumlah_pemasukan"
+                                class="form-control @error('jumlah_pemasukan') is-invalid @enderror"
+                                placeholder="Masukkan Nama"
+                                value="{{ old('jumlah_pemasukan') }}"
+                                required="required"
+                                autocomplete="jumlah_pemasukan">
+                            @error('jumlah_pemasukan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">catatan_pemasukan</label>
+                            <input
+                                type="text"
+                                id="inputName"
+                                name="catatan_pemasukan"
+                                class="form-control @error('catatan_pemasukan') is-invalid @enderror"
+                                placeholder="Masukkan Nama"
+                                value="{{ old('catatan_pemasukan') }}"
+                                required="required"
+                                autocomplete="catatan_pemasukan">
+                            @error('catatan_pemasukan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">Tanggal</label>
+                            <input
+                                type="date"
+                                id="inputName"
+                                name="tanggal"
+                                class="form-control @error('tanggal') is-invalid @enderror"
+                                placeholder="Masukkan Nama"
+                                value="{{ old('tanggal') }}"
+                                required="required"
+                                autocomplete="tanggal">
+                            @error('tanggal')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName">Jam</label>
+                            <input
+                                type="time"
+                                id="inputName"
+                                name="jam"
+                                class="form-control @error('jam') is-invalid @enderror"
+                                placeholder="Masukkan Nama"
+                                value="{{ old('jam') }}"
+                                required="required"
+                                autocomplete="jam">
+                            @error('jam')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        
                     </div>
-                    <div class="form-group">
-                        <label for="jumlah_pemasukan">Jumlah Pemasukan</label>
-                        <input type="text" class="form-control" id="jumlah_pemasukan" name="jumlah_pemasukan" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="catatan_pemasukan">Catatan Pemasukan</label>
-                        <textarea class="form-control" id="catatan_pemasukan" name="catatan_pemasukan" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal">Tanggal</label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="jam">Jam</label>
-                        <input type="time" class="form-control" id="jam" name="jam" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
             </div>
         </div>
-    </section>
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
+                <input type="submit" value="Tambah Pemasukan" class="btn btn-success float-right">
+            </div>
+        </div>
+    </form>
+</section>
+<!-- /.content -->
+
+@endsection @section('script_footer')
+<script>
+    inputFoto.onchange = evt => {
+        const [file] = inputFoto.files
+        if (file) {
+            prevImg.src = URL.createObjectURL(file)
+        }
+    }
+</script>
 @endsection
