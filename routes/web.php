@@ -43,16 +43,16 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::delete('{id}/hapus', 'hapusAkun')->name('delete');
         });
 
-    Route::controller(PemasukanController::class)
-        ->prefix('pemasukan')
-        ->as('pemasukan.')
-        ->group(function () {
-           Route::get('/', 'index')->name('index');
-           Route::post('showdata', 'dataTable')->name('dataTable');
-           Route::match(['get','post'],'tambah', 'tambahPemasukan')->name('add');
-           Route::match(['get','post'],'{id}/ubah', 'ubahPemasukan')->name('edit');
-           Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
-        });
+        Route::controller(PemasukanController::class)
+            ->prefix('pemasukan')
+            ->as('pemasukan.')
+            ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('showdata', 'dataTable')->name('dataTable');
+            Route::match(['get','post'],'tambah', 'tambahPemasukan')->name('add');
+            Route::match(['get','post'],'{id}/ubah', 'ubahPemasukan')->name('edit');
+            Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
+            });
 
     Route::controller(PengeluaranController::class)
         ->prefix('pengeluaran')

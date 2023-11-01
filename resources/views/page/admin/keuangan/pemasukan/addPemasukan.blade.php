@@ -25,8 +25,8 @@
                 <form action="{{ route('pemasukan.add') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="nama_kategori_pemasukan">Nama Kategori Pemasukan</label>
-                        <input type="text" class="form-control" id="nama_kategori_pemasukan" name="nama_kategori_pemasukan" required>
+                        <label for="nama_kategori">Nama Kategori Pemasukan</label>
+                        <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" required>
                     </div>
                     <div class="form-group">
                         <label for="rekening">Pilih Rekening</label>
