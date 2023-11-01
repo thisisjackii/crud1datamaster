@@ -14,6 +14,8 @@ class Pengeluaran extends Model
      *
      * @var array<int, string>
      */
+
+    protected $table = 'pengeluaran';
     protected $fillable = [
         'nama_kategori',
         'nama_pengeluaran',

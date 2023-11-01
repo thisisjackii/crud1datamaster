@@ -118,7 +118,7 @@ class PengeluaranController extends Controller
                 'nama_kategori' => $request->nama_kategori,
                 'nama_pengeluaran' => $request->nama_pengeluaran,
                 'tujuan_transaksi' => $request->tujuan_transaksi,
-                'frekuensi' => $request->frekuensi,
+                'kuantitas' => $request->kuantitas,
                 'harga_peritem' => $request->harga_peritem,
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,
