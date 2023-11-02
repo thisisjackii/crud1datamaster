@@ -38,36 +38,18 @@ class PemasukanController extends Controller
 
         if(empty($request->input('search.value')))
         {
-            $pemasukan_data = Pemasukan::where('id','!=',Pemasukan::id())
-            ->offset($start_val)
+            $pemasukan_data = Pemasukan::offset($start_val)
             ->limit($limit_val)
             ->orderBy($order_val,$dir_val)
             ->get();
         } else {
             $search_text = $request->input('search.value');
-
-            $pemasukan_data =  Pemasukan::where('id','!=',Pemasukan::id())
-            ->where('id','LIKE',"%{$search_text}%")
-            ->orWhere('nama_kategori', 'LIKE',"%{$search_text}%")
-            ->orWhere('rekening', 'LIKE',"%{$search_text}%")
-            ->orWhere('jumlah_pemasukan', 'LIKE',"%{$search_text}%")
-            ->orWhere('catatan_pemasukan', 'LIKE',"%{$search_text}%")
-            ->orWhere('tanggal', 'LIKE',"%{$search_text}%")
-            ->orWhere('jam', 'LIKE',"%{$search_text}%")
-            ->offset($start_val)
+            $pemasukan_data =  Pemasukan::offset($start_val)
             ->limit($limit_val)
             ->orderBy($order_val,$dir_val)
             ->get();
 
-            $totalFilteredRecord = Pemasukan::where('id','!=',Pemasukan::id())
-            ->where('id','LIKE',"%{$search_text}%")
-            ->orWhere('nama_kategori', 'LIKE',"%{$search_text}%")
-            ->orWhere('rekening', 'LIKE',"%{$search_text}%")
-            ->orWhere('jumlah_pemasukan', 'LIKE',"%{$search_text}%")
-            ->orWhere('catatan_pemasukan', 'LIKE',"%{$search_text}%")
-            ->orWhere('tanggal', 'LIKE',"%{$search_text}%")
-            ->orWhere('jam', 'LIKE',"%{$search_text}%")
-            ->count();
+            $totalFilteredRecord = Pemasukan::count();
         }
 
         $data_val = array();
@@ -77,13 +59,14 @@ class PemasukanController extends Controller
             {
                 $url = route('pemasukan.edit',['id' => $pemasukan_val->id]);
                 $urlHapus = route('pemasukan.delete',$pemasukan_val->id);
+                $pemasukannestedData['id'] = $pemasukan_val->id;
                 $pemasukannestedData['nama_kategori'] = $pemasukan_val->nama_kategori;
                 $pemasukannestedData['rekening'] = $pemasukan_val->rekening;
                 $pemasukannestedData['jumlah_pemasukan'] = $pemasukan_val->jumlah_pemasukan;
                 $pemasukannestedData['catatan_pemasukan'] = $pemasukan_val->catatan_pemasukan;
                 $pemasukannestedData['tanggal'] = $pemasukan_val->tanggal;
                 $pemasukannestedData['jam'] = $pemasukan_val->jam;
-                $pemasukannestedData['options'] = "<a href='$url'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-id='$pemasukan_val->id' data-url='$urlHapus'><i class='fas fa-trash fa-lg text-danger'></i></a>";
+                $pemasukannestedData['opsi'] = "<a href='$url'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-id='$pemasukan_val->id' data-url='$urlHapus'><i class='fas fa-trash fa-lg text-danger'></i></a>";
                 $data_val[] = $pemasukannestedData;
             }
         }

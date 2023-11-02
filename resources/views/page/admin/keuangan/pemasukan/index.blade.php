@@ -49,6 +49,7 @@
                             <th>Catatan Pemasukan</th>
                             <th>Tanggal</th>
                             <th>Jam</th>
+                            <th>Opsi</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -88,7 +89,9 @@
                     "data": "tanggal"
                 }, {
                     "data": "jam"
-                }, ],
+                }, {
+                    "data": "opsi"
+                },],
                 "language": {
                     "decimal": "",
                     "emptyTable": "Tak ada data yang tersedia pada tabel ini",
