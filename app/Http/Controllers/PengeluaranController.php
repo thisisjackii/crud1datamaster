@@ -38,38 +38,19 @@ class PengeluaranController extends Controller
 
         if(empty($request->input('search.value')))
         {
-            $pengeluaran_data = Pengeluaran::where('id','!=',Pengeluaran::id())
-            ->offset($start_val)
+            $pengeluaran_data = Pengeluaran::offset($start_val)
             ->limit($limit_val)
             ->orderBy($order_val,$dir_val)
             ->get();
         } else {
             $search_text = $request->input('search.value');
 
-            $pengeluaran_data =  Pengeluaran::where('id','!=',Pengeluaran::id())
-            ->where('id','LIKE',"%{$search_text}%")
-            ->orWhere('nama_kategori', 'LIKE',"%{$search_text}%")
-            ->orWhere('nama_pengeluaran', 'LIKE',"%{$search_text}%")
-            ->orWhere('tujuan_transaksi', 'LIKE',"%{$search_text}%")
-            ->orWhere('kuantitas', 'LIKE',"%{$search_text}%")
-            ->orWhere('harga_peritem', 'LIKE',"%{$search_text}%")
-            ->orWhere('tanggal', 'LIKE',"%{$search_text}%")
-            ->orWhere('jam', 'LIKE',"%{$search_text}%")
-            ->offset($start_val)
+            $pengeluaran_data =  Pengeluaran::offset($start_val)
             ->limit($limit_val)
             ->orderBy($order_val,$dir_val)
             ->get();
 
-            $totalFilteredRecord = Pengeluaran::where('id','!=',Pengeluaran::id())
-            ->where('id','LIKE',"%{$search_text}%")
-            ->orWhere('nama_kategori', 'LIKE',"%{$search_text}%")
-            ->orWhere('nama_pengeluaran', 'LIKE',"%{$search_text}%")
-            ->orWhere('tujuan_transaksi', 'LIKE',"%{$search_text}%")
-            ->orWhere('kuantitas', 'LIKE',"%{$search_text}%")
-            ->orWhere('harga_peritem', 'LIKE',"%{$search_text}%")
-            ->orWhere('tanggal', 'LIKE',"%{$search_text}%")
-            ->orWhere('jam', 'LIKE',"%{$search_text}%")
-            ->count();
+            $totalFilteredRecord = Pengeluaran::count();
         }
 
         $data_val = array();
@@ -79,6 +60,7 @@ class PengeluaranController extends Controller
             {
                 $url = route('pengeluaran.edit',['id' => $pengeluaran_val->id]);
                 $urlHapus = route('pengeluaran.delete',$pengeluaran_val->id);
+                $pengeluarannestedData['id'] = $pengeluaran_val->id;
                 $pengeluarannestedData['nama_kategori'] = $pengeluaran_val->nama_kategori;
                 $pengeluarannestedData['nama_pengeluaran'] = $pengeluaran_val->nama_pengeluaran;
                 $pengeluarannestedData['tujuan_transaksi'] = $pengeluaran_val->tujuan_transaksi;
@@ -86,7 +68,7 @@ class PengeluaranController extends Controller
                 $pengeluarannestedData['harga_peritem'] = $pengeluaran_val->harga_peritem;
                 $pengeluarannestedData['tanggal'] = $pengeluaran_val->tanggal;
                 $pengeluarannestedData['jam'] = $pengeluaran_val->jam;
-                $pengeluarannestedData['options'] = "<a href='$url'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-id='$pengeluaran_val->id' data-url='$urlHapus'><i class='fas fa-trash fa-lg text-danger'></i></a>";
+                $pengeluarannestedData['opsi'] = "<a href='$url'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-id='$pengeluaran_val->id' data-url='$urlHapus'><i class='fas fa-trash fa-lg text-danger'></i></a>";
                 $data_val[] = $pengeluarannestedData;
             }
         }

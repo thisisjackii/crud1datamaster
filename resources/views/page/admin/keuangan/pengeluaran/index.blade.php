@@ -56,15 +56,14 @@
                     <thead>
                         <tr>
                             <th>Nomor</th>
-                            <th>Kategori Pengeluaran</th>
-                            <th>Jenis Pengularan</th>
-                            <th>Kuantitas</th>
+                            <th>Nama Kategori</th>
+                            <th>Nama Pengeluaran</th>
                             <th>Tujuan Transaksi</th>
                             <th>Kuantitas</th>
-                            <th>Harga Per Item</th>
+                            <th>Harga per Item</th>
                             <th>Tanggal</th>
                             <th>Jam</th>
-                            <th>Action</th>
+                            <th>Opsi</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -111,6 +110,8 @@
                     "data": "tanggal"
                 }, {
                     "data": "jam"
+                },{
+                    "data": "opsi"
                 }
             ],
             "language": {
