@@ -37,8 +37,8 @@
                         <input type="text" class="form-control" id="tujuan_transaksi" name="tujuan_transaksi" value="{{ $pengeluaran->tujuan_transaksi }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="frekuensi">Frekuensi/Jumlah Barang</label>
-                        <input type="text" class="form-control" id="frekuensi" name="frekuensi" value="{{ $pengeluaran->frekuensi }}" required>
+                        <label for="kuantitas">Frekuensi/Jumlah Barang</label>
+                        <input type="text" class="form-control" id="kuantitas" name="kuantitas" value="{{ $pengeluaran->kuantitas }}" required>
                     </div>
                     <div class="form-group">
                         <label for="harga_peritem">Harga Peritem</label>

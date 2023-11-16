@@ -121,7 +121,7 @@ class PengeluaranController extends Controller
                 'nama_kategori' => 'required|string',
                 'nama_pengeluaran' => 'required|string',
                 'tujuan_transaksi' => 'required|string',
-                'frekuensi' => 'required|numeric',
+                'kuantitas' => 'required|numeric',
                 'harga_peritem' => 'required|numeric',
                 'tanggal' => 'required|date',
                 'jam' => 'required',
@@ -131,13 +131,13 @@ class PengeluaranController extends Controller
                 'nama_kategori' => $request->nama_kategori,
                 'nama_pengeluaran' => $request->nama_pengeluaran,
                 'tujuan_transaksi' => $request->tujuan_transaksi,
-                'frekuensi' => $request->frekuensi,
+                'kuantitas' => $request->kuantitas,
                 'harga_peritem' => $request->harga_peritem,
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,
             ]);
 
-            return redirect()->route('pengeluaran.edit', ['id' => $pengeluaran->id])->with('status', 'Data telah tersimpan di database');
+            return redirect()->route('pengeluaran.index', ['id' => $pengeluaran->id])->with('status', 'Data telah tersimpan di database');
         }
 
         return view('page.admin.keuangan.pengeluaran.ubahPengeluaran', [

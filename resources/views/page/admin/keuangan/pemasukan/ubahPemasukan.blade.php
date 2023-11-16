@@ -20,18 +20,31 @@
     </section>
 
     <section class="content">
+        @if(session('status'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+            {{ session('status') }}
+        </div>
+        @endif
+
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('pemasukan.edit', ['id' => $pemasukan->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="nama_kategori_pemasukan">Nama Kategori Pemasukan</label>
-                        <input type="text" class="form-control" id="nama_kategori_pemasukan" name="nama_kategori_pemasukan" value="{{ $pemasukan->nama_kategori_pemasukan }}" required>
+                        <label for="nama_kategori">Nama Kategori Pemasukan</label>
+                        <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" value="{{ $pemasukan->nama_kategori }}" required>
                     </div>
                     <div class="form-group">
                         <label for="rekening">Pilih Rekening</label>
                         <select class="form-control" id="rekening" name="rekening" required>
-                            <!-- Add your options here -->
+                            <option value="BCA" @if($pemasukan->rekening == 'BCA') selected @endif>BCA (Bank Central Asia)</option>
+                            <option value="BRI" @if($pemasukan->rekening == 'BRI') selected @endif>BRI (Bank Rakyat Indonesia)</option>
+                            <option value="BNI" @if($pemasukan->rekening == 'BNI') selected @endif>BNI (Bank Negara Indonesia)</option>
+                            <option value="Mandiri" @if($pemasukan->rekening == 'Mandiri') selected @endif>Mandiri (Bank Mandiri)</option>
+                            <option value="CIMB" @if($pemasukan->rekening == 'CIMB') selected @endif>CIMB Niaga</option>
+                            <option value="Maybank" @if($pemasukan->rekening == 'Maybank') selected @endif>Maybank Indonesia</option>
                         </select>
                     </div>
                     <div class="form-group">

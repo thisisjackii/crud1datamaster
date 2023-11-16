@@ -51,7 +51,7 @@ $links = [
                 "section_href" => route('pengeluaran.index')
             ],
             [
-                "section_text" => "Tambah Akun",
+                "section_text" => "Tambah Pengeluaran",
                 "section_icon" => "far fa-circle",
                 "section_href" => route('pengeluaran.add')
             ]

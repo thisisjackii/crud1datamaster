@@ -122,6 +122,7 @@ class PemasukanController extends Controller
                 'jam' => 'required',
             ]);
 
+            // Dalam metode update, Anda bisa langsung menggunakan $request->all()
             $pemasukan->update([
                 'nama_kategori' => $request->nama_kategori,
                 'rekening' => $request->rekening,
@@ -131,13 +132,16 @@ class PemasukanController extends Controller
                 'jam' => $request->jam,
             ]);
 
-            return redirect()->route('pemasukan.edit', ['id' => $pemasukan->id])->with('status', 'Data telah tersimpan di database');
+            // Mengarahkan pengguna ke halaman data tabel Pemasukan setelah berhasil mengupdate
+            return redirect()->route('pemasukan.index')->with('status', 'Data telah tersimpan di database');
         }
 
         return view('page.admin.keuangan.pemasukan.ubahPemasukan', [
             'pemasukan' => $pemasukan
         ]);
     }
+
+
 
     public function hapusPemasukan($id)
     {
