@@ -1,31 +1,31 @@
 @extends('layouts.base_admin.base_dashboard')
-@section('judul', 'List Pengeluaran')
+@section('judul', 'List Akun')
 @section('script_head')
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Data Pengeluaran</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">Beranda</a>
-                        </li>
-                        <li class="breadcrumb-item active">Pengeluaran</li>
-                    </ol>
-                </div>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Data Akun</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item active">Akun</li>
+                </ol>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section class="content">
         <div class="card">
@@ -140,38 +140,40 @@
             }
         });
 
-        // hapus data
-        $('#previewPengeluaran').on('click', '.hapusData', function () {
-            var id = $(this).data("id");
-            var url = $(this).data("url");
-            Swal
-                .fire({
-                    title: 'Apa kamu yakin?',
-                    text: "Kamu tidak akan dapat mengembalikan ini!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal'
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: url,
-                            type: 'DELETE',
-                            data: {
-                                "id": id,
-                                "_token": "{{ csrf_token() }}"
-                            },
-                            success: function (response) {
-                                Swal.fire('Terhapus!', response.msg, 'success');
-                                $('#previewPengeluaran').DataTable().ajax.reload();
+                // hapus data
+                $('#previewAkun').on('click', '.hapusData', function () {
+                    var id = $(this).data("id");
+                    var url = $(this).data("url");
+                    Swal
+                        .fire({
+                            title: 'Apa kamu yakin?',
+                            text: "Kamu tidak akan dapat mengembalikan ini!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal'
+                        })
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                // console.log();
+                                $.ajax({
+                                    url: url,
+                                    type: 'DELETE',
+                                    data: {
+                                        "id": id,
+                                        "_token": "{{csrf_token()}}"
+                                    },
+                                    success: function (response) {
+                                        // console.log();
+                                        Swal.fire('Terhapus!', response.msg, 'success');
+                                        $('#previewAkun').DataTable().ajax.reload();
+                                    }
+                                });
                             }
-                        });
-                    }
-                })
+                        })
+                });
         });
-    });
 </script>
 @endsection
