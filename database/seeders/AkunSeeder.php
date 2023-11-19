@@ -17,19 +17,23 @@ class AkunSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        $imagePath = storage_path('app/public/user_images');
-        if (!file_exists($imagePath)) {
-            mkdir($imagePath, 0777, true);
-        }
+        $imagePath = 'public/user_images';
+        Storage::makeDirectory($imagePath);
+        // $imagePath = storage_path('app/public/user_images');
+        // if (!file_exists($imagePath)) {
+        //     mkdir($imagePath, 0777, true);
+        // }
 
-        foreach (range(1, 50) as $index) {
-            $imageFileName = $faker->image($imagePath, 200, 200, 'people', false);
+        foreach (range(1, 2) as $index) {
+            // $imageFileName = $faker->image($imagePath, 200, 200, 'people', false);
+            $filename = "user1-128x128.jpg";
+            Storage::copy("public/user_images_template/{$filename}", "{$imagePath}/{$filename}");
 
             \App\Models\User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt('password'),
-                'user_image' => 'user_images/' . $imageFileName,
+                'user_image' => $filename,
             ]);
         }
     }

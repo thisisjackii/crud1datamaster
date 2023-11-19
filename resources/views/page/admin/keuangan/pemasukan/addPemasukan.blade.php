@@ -58,7 +58,8 @@
                         </div>
                         <div class="form-group">
                             <label for="inputName">Rekening</label>
-                            <select name="rekening" class="form-control @error('rekening') is-invalid @enderror" id="rekening" value="{{ old('rekening') }}" autocomplete="rekening" required>
+                            <select name="rekening" class="form-control @error('rekening') is-invalid @enderror"
+                                id="rekening" value="{{ old('rekening') }}" autocomplete="rekening" required>
                                 <option value="BCA">BCA (Bank Central Asia)</option>
                                 <option value="BRI">BRI (Bank Rakyat Indonesia)</option>
                                 <option value="BNI">BNI (Bank Negara Indonesia)</option>
@@ -79,8 +80,8 @@
                             <label for="inputName">Jumlah Pemasukan</label>
                             <input type="number" id="inputName" name="jumlah_pemasukan"
                                 class="form-control @error('jumlah_pemasukan') is-invalid @enderror"
-                                placeholder="Masukkan Jumlah Pemasukkan" value="{{ old('jumlah_pemasukan') }}" required="required"
-                                autocomplete="jumlah_pemasukan">
+                                placeholder="Masukkan Jumlah Pemasukkan" value="{{ old('jumlah_pemasukan') }}"
+                                required="required" autocomplete="jumlah_pemasukan">
                             @error('jumlah_pemasukan')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -91,8 +92,8 @@
                             <label for="inputName">Catatan Pemasukan</label>
                             <input type="text" id="inputName" name="catatan_pemasukan"
                                 class="form-control @error('catatan_pemasukan') is-invalid @enderror"
-                                placeholder="Masukkan Catatan" value="{{ old('catatan_pemasukan') }}" required="required"
-                                autocomplete="catatan_pemasukan">
+                                placeholder="Masukkan Catatan" value="{{ old('catatan_pemasukan') }}"
+                                required="required" autocomplete="catatan_pemasukan">
                             @error('catatan_pemasukan')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -102,8 +103,9 @@
                         <div class="form-group">
                             <label for="inputName">Tanggal</label>
                             <input type="date" id="inputName" name="tanggal"
-                                class="form-control @error('tanggal') is-invalid @enderror" placeholder="Masukkan Tanggal"
-                                value="{{ old('tanggal') }}" required="required" autocomplete="tanggal">
+                                class="form-control @error('tanggal') is-invalid @enderror"
+                                placeholder="Masukkan Tanggal" value="{{ old('tanggal') }}" required="required"
+                                autocomplete="tanggal">
                             @error('tanggal')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -121,17 +123,12 @@
                             </span>
                             @enderror
                         </div>
-
+                        <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
+                        <input type="submit" value="Tambah Pemasukan" class="btn btn-success float-right">
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
-                <input type="submit" value="Tambah Pemasukan" class="btn btn-success float-right">
             </div>
         </div>
     </form>

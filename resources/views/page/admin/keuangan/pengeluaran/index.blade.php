@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Data Akun</h1>
+                <h1>Data Pengeluaran</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -141,7 +141,7 @@
         });
 
                 // hapus data
-                $('#previewAkun').on('click', '.hapusData', function () {
+                $('#previewPengeluaran').on('click', '.hapusData', function () {
                     var id = $(this).data("id");
                     var url = $(this).data("url");
                     Swal
@@ -168,7 +168,7 @@
                                     success: function (response) {
                                         // console.log();
                                         Swal.fire('Terhapus!', response.msg, 'success');
-                                        $('#previewAkun').DataTable().ajax.reload();
+                                        $('#previewPengeluaran').DataTable().ajax.reload();
                                     }
                                 });
                             }
