@@ -6,6 +6,11 @@
     type="text/css"
     href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.datatables.net/1.11.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+
 @endsection
 
 @section('content')
@@ -79,91 +84,82 @@
 <script
     type="text/javascript"
     src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-<script>
+    <script>
     $(document).ready(function () {
-                $('#previewAkun').DataTable({
-                    "serverSide": true,
-                    "processing": true,
-                    "ajax": {
-                        "url": "{{ route('akun.dataTable') }}",
-                        "dataType": "json",
-                        "type": "POST",
-                        "data": {
-                            _token: "{{csrf_token()}}"
-                        }
-                    },
-                    "columns": [
-                        {
-                            "data": "name"
-                        }, {
-                            "data": "email"
-                        }, {
-                            "data": "user_image"
-                        }, {
-                            "data": "options"
-                        }
-                    ],
-                    "language": {
-                        "decimal": "",
-                        "emptyTable": "Tak ada data yang tersedia pada tabel ini",
-                        "info": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
-                        "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
-                        "infoFiltered": "(difilter dari _MAX_ total entri)",
-                        "infoPostFix": "",
-                        "thousands": ",",
-                        "lengthMenu": "Tampilkan _MENU_ entri",
-                        "loadingRecords": "Loading...",
-                        "processing": "Sedang Mengambil Data...",
-                        "search": "Pencarian:",
-                        "zeroRecords": "Tidak ada data yang cocok ditemukan",
-                        "paginate": {
-                            "first": "Pertama",
-                            "last": "Terakhir",
-                            "next": "Selanjutnya",
-                            "previous": "Sebelumnya"
-                        },
-                        "aria": {
-                            "sortAscending": ": aktifkan untuk mengurutkan kolom ascending",
-                            "sortDescending": ": aktifkan untuk mengurutkan kolom descending"
-                        }
-                    }
-
-                });
-
-                // hapus data
-                $('#previewAkun').on('click', '.hapusData', function () {
-                    var id = $(this).data("id");
-                    var url = $(this).data("url");
-                    Swal
-                        .fire({
-                            title: 'Apa kamu yakin?',
-                            text: "Kamu tidak akan dapat mengembalikan ini!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Ya, hapus!',
-                            cancelButtonText: 'Batal'
-                        })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                // console.log();
-                                $.ajax({
-                                    url: url,
-                                    type: 'DELETE',
-                                    data: {
-                                        "id": id,
-                                        "_token": "{{csrf_token()}}"
-                                    },
-                                    success: function (response) {
-                                        // console.log();
-                                        Swal.fire('Terhapus!', response.msg, 'success');
-                                        $('#previewAkun').DataTable().ajax.reload();
-                                    }
-                                });
-                            }
-                        })
-                });
+        $('#previewAkun').DataTable({
+            "serverSide": true,
+            "processing": true,
+            "ajax": {
+                "url": "{{ route('akun.dataTable') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    _token: "{{ csrf_token() }}"
+                }
+            },
+            "columns": [
+                { "data": "name", "name": "name" },
+                { "data": "email", "name": "email" },
+                { "data": "user_image", "name": "user_image", "orderable": false, "searchable": false },
+                { "data": "options", "name": "options", "orderable": false, "searchable": false }
+            ],
+            "language": {
+                "decimal": "",
+                "emptyTable": "Tak ada data yang tersedia pada tabel ini",
+                "info": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+                "infoFiltered": "(difilter dari _MAX_ total entri)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Tampilkan _MENU_ entri",
+                "loadingRecords": "Loading...",
+                "processing": "Sedang Mengambil Data...",
+                "search": "Pencarian:",
+                "zeroRecords": "Tidak ada data yang cocok ditemukan",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "Terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                },
+                "aria": {
+                    "sortAscending": ": aktifkan untuk mengurutkan kolom ascending",
+                    "sortDescending": ": aktifkan untuk mengurutkan kolom descending"
+                }
+            }
         });
+
+        // hapus data
+        $('#previewAkun').on('click', '.hapusData', function () {
+            var id = $(this).data("id");
+            var url = $(this).data("url");
+            Swal.fire({
+                title: 'Apa kamu yakin?',
+                text: "Kamu tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        data: {
+                            "id": id,
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function (response) {
+                            Swal.fire('Terhapus!', response.msg, 'success');
+                            $('#previewAkun').DataTable().ajax.reload();
+                        }
+                    });
+                }
+            })
+        });
+    });
 </script>
+
 @endsection
