@@ -111,7 +111,7 @@
                 }, {
                     "data": "jam"
                 },{
-                    "data": "opsi"
+                    "data": "options"
                 }
             ],
             "language": {

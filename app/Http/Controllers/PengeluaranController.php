@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class PengeluaranController extends Controller
 {
@@ -14,73 +13,38 @@ class PengeluaranController extends Controller
     {
         return view('page.admin.keuangan.pengeluaran.index');
     }
+
     public function dataTable(Request $request)
     {
-        $totalFilteredRecord = $totalDataRecord = $draw_val = "";
-        $columns_list = array(
-            0 => 'nama_kategori',
-            1 => 'nama_pengeluaran',
-            2 => 'tujuan_transaksi',
-            3 => 'kuantitas',
-            4 => 'harga_peritem',
-            5 => 'tanggal',
-            6 => 'jam',
-        );
+        if ($request->ajax()) {
+            $columns = [
+                'nama_kategori',
+                'nama_pengeluaran',
+                'tujuan_transaksi',
+                'kuantitas',
+                'harga_peritem',
+                'tanggal',
+                'jam',
+                'id',
+            ];
 
-        $totalDataRecord = Pengeluaran::count();
+            $data = Pengeluaran::select($columns);
 
-        $totalFilteredRecord = $totalDataRecord;
+            return DataTables::of($data)
+                ->addColumn('options', function ($row) {
+                    $url = route('pengeluaran.edit', ['id' => $row->id]);
+                    $urlHapus = route('pengeluaran.delete', $row->id);
 
-        $limit_val = $request->input('length');
-        $start_val = $request->input('start');
-        $order_val = $columns_list[$request->input('order.0.column')];
-        $dir_val = $request->input('order.0.dir');
+                    $options = "<a href='$url'><i class='fas fa-edit fa-lg'></i></a>
+                                <a style='border: none; background-color:transparent;' class='hapusData' data-id='$row->id' data-url='$urlHapus'>
+                                    <i class='fas fa-trash fa-lg text-danger'></i>
+                                </a>";
 
-        if(empty($request->input('search.value')))
-        {
-            $pengeluaran_data = Pengeluaran::offset($start_val)
-            ->limit($limit_val)
-            ->orderBy($order_val,$dir_val)
-            ->get();
-        } else {
-            $search_text = $request->input('search.value');
-
-            $pengeluaran_data =  Pengeluaran::offset($start_val)
-            ->limit($limit_val)
-            ->orderBy($order_val,$dir_val)
-            ->get();
-
-            $totalFilteredRecord = Pengeluaran::count();
+                    return $options;
+                })
+                ->rawColumns(['options'])
+                ->make(true);
         }
-
-        $data_val = array();
-        if(!empty($pengeluaran_data))
-        {
-            foreach ($pengeluaran_data as $pengeluaran_val)
-            {
-                $url = route('pengeluaran.edit',['id' => $pengeluaran_val->id]);
-                $urlHapus = route('pengeluaran.delete',$pengeluaran_val->id);
-                $pengeluarannestedData['id'] = $pengeluaran_val->id;
-                $pengeluarannestedData['nama_kategori'] = $pengeluaran_val->nama_kategori;
-                $pengeluarannestedData['nama_pengeluaran'] = $pengeluaran_val->nama_pengeluaran;
-                $pengeluarannestedData['tujuan_transaksi'] = $pengeluaran_val->tujuan_transaksi;
-                $pengeluarannestedData['kuantitas'] = $pengeluaran_val->kuantitas;
-                $pengeluarannestedData['harga_peritem'] = $pengeluaran_val->harga_peritem;
-                $pengeluarannestedData['tanggal'] = $pengeluaran_val->tanggal;
-                $pengeluarannestedData['jam'] = $pengeluaran_val->jam;
-                $pengeluarannestedData['opsi'] = "<a href='$url'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-id='$pengeluaran_val->id' data-url='$urlHapus'><i class='fas fa-trash fa-lg text-danger'></i></a>";
-                $data_val[] = $pengeluarannestedData;
-            }
-        }
-        $draw_val = $request->input('draw');
-        $get_json_data = array(
-        "draw"            => intval($draw_val),
-        "recordsTotal"    => intval($totalDataRecord),
-        "recordsFiltered" => intval($totalFilteredRecord),
-        "data"            => $data_val
-        );
-
-        echo json_encode($get_json_data);
     }
 
     public function tambahPengeluaran(Request $request)
