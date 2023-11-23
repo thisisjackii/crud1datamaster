@@ -3,6 +3,7 @@
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\HutangController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -63,5 +64,16 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
            Route::match(['get','post'],'tambah', 'tambahPengeluaran')->name('add');
            Route::match(['get','post'],'{id}/ubah', 'ubahPengeluaran')->name('edit');
            Route::delete('{id}/hapus', 'hapusPengeluaran')->name('delete');
+        });
+
+    Route::controller(HutangController::class)
+        ->prefix('hutang')
+        ->as('hutang.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('showdata', 'dataTable')->name('dataTable');
+            Route::match(['get', 'post'], 'tambah', 'tambahHutang')->name('add');
+            Route::match(['get', 'post'], '{id}/ubah', 'ubahHutang')->name('edit');
+            Route::delete('{id}/hapus', 'hapusHutang')->name('delete');
         });
 });
