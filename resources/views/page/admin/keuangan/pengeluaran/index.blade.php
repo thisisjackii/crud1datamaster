@@ -49,6 +49,10 @@
                 </div>
             </div>
             <div class="card-body p-0" style="margin: 20px">
+            <form method="post" action="{{route('report.index')}}">
+            @csrf
+                <input type="submit" value="Cetak Word">
+            </form>
                 <table
                     id="previewPengeluaran"
                     class="table table-striped table-bordered display"

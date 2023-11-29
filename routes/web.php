@@ -3,6 +3,7 @@
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\PengeluaranReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -64,4 +65,13 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
            Route::match(['get','post'],'{id}/ubah', 'ubahPengeluaran')->name('edit');
            Route::delete('{id}/hapus', 'hapusPengeluaran')->name('delete');
         });
+
+        Route::controller(PengeluaranReportController::class)
+        ->prefix('report')
+        ->as('report.')
+        ->group(function () {
+            Route::post('/','index')->name('index');
+        });
+
+
 });
