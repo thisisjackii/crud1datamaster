@@ -7,6 +7,7 @@ use App\Http\Controllers\PengeluaranReportController;
 use App\Http\Controllers\HutangController;
 use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
+use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -86,6 +87,17 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::match(['get', 'post'], 'tambah', 'tambahHutang')->name('add');
             Route::match(['get', 'post'], '{id}/ubah', 'ubahHutang')->name('edit');
             Route::delete('{id}/hapus', 'hapusHutang')->name('delete');
+        });
+
+    Route::controller(PinjamanController::class)
+        ->prefix('pinjaman')
+        ->as('pinjaman.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('showdata', 'dataTable')->name('dataTable');
+            Route::match(['get', 'post'], 'tambah', 'tambahPinjaman')->name('add');
+            Route::match(['get', 'post'], '{id}/ubah', 'ubahPinjaman')->name('edit');
+            Route::delete('{id}/hapus', 'hapusPinjaman')->name('delete');
         });
 
     Route::controller(TransferController::class)
