@@ -75,6 +75,23 @@
             ],
         ],
         [
+            'text' => 'Kelola Pinjaman',
+            'icon' => 'fas fa-users',
+            'is_multi' => true,
+            'href' => [
+                [
+                    'section_text' => 'Data Pinjaman',
+                    'section_icon' => 'far fa-circle',
+                    'section_href' => route('pinjaman.index'),
+                ],
+                [
+                    'section_text' => 'Tambah Pinjaman',
+                    'section_icon' => 'far fa-circle',
+                    'section_href' => route('pinjaman.add'),
+                ],
+            ],
+        ],
+        [
             'text' => 'Kelola Transfer Saldo',
             'icon' => 'fas fa-users',
             'is_multi' => true,
