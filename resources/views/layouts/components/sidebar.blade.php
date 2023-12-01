@@ -74,6 +74,23 @@
                 ],
             ],
         ],
+        [
+            'text' => 'Kelola Transfer Saldo',
+            'icon' => 'fas fa-users',
+            'is_multi' => true,
+            'href' => [
+                [
+                    'section_text' => 'Data Transfer Saldo',
+                    'section_icon' => 'far fa-circle',
+                    'section_href' => route('transfer_saldo.index'),
+                ],
+                [
+                    'section_text' => 'Tambah Transfer Saldo',
+                    'section_icon' => 'far fa-circle',
+                    'section_href' => route('transfer_saldo.add'),
+                ],
+            ],
+        ],        
     ];
     $navigation_links = json_decode(json_encode($links));
 @endphp
