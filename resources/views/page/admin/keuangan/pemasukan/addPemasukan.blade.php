@@ -45,37 +45,67 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="inputName">Nama Kategori</label>
-                            <input type="text" id="inputName" name="nama_kategori"
-                                class="form-control @error('nama_kategori') is-invalid @enderror"
-                                placeholder="Masukkan Nama" value="{{ old('nama_kategori') }}" required="required"
-                                autocomplete="nama_kategori">
+                            <label for="NamaKategori">Nama Kategori</label>
+                            <select name="nama_kategori" id="NamaKategori"
+                                class="form-control @error('nama_kategori') is-invalid @enderror">
+                                <option value="" disabled selected>Pilih Kategori Pemasukan</option>  
+                                <option value="Gaji">Gaji</option>
+                                <option value="Kiriman">Kiriman</option>
+                                <option value="Pekerjaan">Pekerjaan</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
                             @error('nama_kategori')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
+
+                        <div id="customNotes" class="form-group" style="display: none;">
+                            <label for="customNotesInput">Kategori Pemasukan Lainnya:</label>
+                            <input type="text" id="customNotesInput" name="custom_notes"
+                                class="form-control @error('custom_notes') is-invalid @enderror">
+                            @error('custom_notes')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
                         <div class="form-group">
-                            <label for="inputName">Rekening</label>
-                            <select name="rekening" class="form-control @error('rekening') is-invalid @enderror"
-                                id="rekening" value="{{ old('rekening') }}" autocomplete="rekening" required>
+                            <label for="Rekening">Rekening</label>
+                            <select name="rekening" id="Rekening"
+                                class="form-control @error('rekening') is-invalid @enderror">
+                                <option value="" disabled selected>Pilih Rekening</option>  
                                 <option value="BCA">BCA (Bank Central Asia)</option>
                                 <option value="BRI">BRI (Bank Rakyat Indonesia)</option>
                                 <option value="BNI">BNI (Bank Negara Indonesia)</option>
                                 <option value="Mandiri">Mandiri (Bank Mandiri)</option>
                                 <option value="CIMB">CIMB Niaga</option>
                                 <option value="Maybank">Maybank Indonesia</option>
+                                <option value="GOPAY">GOPAY</option>
+                                <option value="SHOPEE PAY">SHOPEE PAY</option>
+                                <option value="OVO">OVO</option>
+                                <option value="Lainnya">Lainnya</option>
                             </select>
-                            <!-- <input type="text" id="inputName" name="rekening"
-                                class="form-control @error('rekening') is-invalid @enderror" placeholder="Masukkan Nama"
-                                value="{{ old('rekening') }}" required="required" autocomplete="rekening"> -->
                             @error('rekening')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
+
+                        <div id="customNotes2" class="form-group" style="display: none;">
+                            <label for="customNotesInput2">Rekening Lainnya:</label>
+                            <input type="text" id="customNotesInput2" name="custom_notes2"
+                                class="form-control @error('custom_notes2') is-invalid @enderror">
+                            @error('custom_notes2')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        
                         <div class="form-group">
                             <label for="inputName">Jumlah Pemasukan</label>
                             <input type="number" id="inputName" name="jumlah_pemasukan"
@@ -136,12 +166,36 @@
 <!-- /.content -->
 
 @endsection @section('script_footer')
+
 <script>
-    inputFoto.onchange = evt => {
-        const [file] = inputFoto.files
-        if (file) {
-            prevImg.src = URL.createObjectURL(file)
+    document.getElementById('NamaKategori').addEventListener('change', function () {
+        var customNotesDiv = document.getElementById('customNotes');
+        var customNotesInput = document.getElementById('customNotesInput');
+
+        if (this.options[this.selectedIndex].value === 'Lainnya') {
+            customNotesDiv.style.display = 'block';
+            customNotesInput.setAttribute('required', 'required');
+        } else {
+            customNotesDiv.style.display = 'none';
+            customNotesInput.removeAttribute('required');
         }
-    }
+    });
 </script>
+
+<script>
+    document.getElementById('Rekening').addEventListener('change', function () {
+        var customNotesDiv = document.getElementById('customNotes2');
+        var customNotesInput = document.getElementById('customNotesInput2');
+
+        if (this.options[this.selectedIndex].value === 'Lainnya') {
+            customNotesDiv.style.display = 'block';
+            customNotesInput.setAttribute('required', 'required');
+        } else {
+            customNotesDiv.style.display = 'none';
+            customNotesInput.removeAttribute('required');
+        }
+    });
+</script>
+
+
 @endsection
