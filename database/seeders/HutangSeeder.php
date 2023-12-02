@@ -22,7 +22,7 @@ class HutangSeeder extends Seeder
                 'jam_hutang' => now()->toTimeString(),
                 'tanggal_jatuh_tempo' => now()->addDays(30)->toDateString(),
                 'jam_jatuh_tempo' => now()->addDays(30)->toTimeString(),
-                'status' => ($i % 2 == 0) ? 'sudah lunas' : 'belum lunas',
+                'status' => ($i % 2 == 0) ? 'Sudah Lunas' : 'Belum Lunas',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
