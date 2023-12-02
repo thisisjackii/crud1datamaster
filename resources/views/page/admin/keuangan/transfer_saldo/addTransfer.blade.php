@@ -44,12 +44,39 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="inputName">Sumber Rekening</label>
                             <input type="text" id="inputName" name="sumber_rekening"
                                 class="form-control @error('sumber_rekening') is-invalid @enderror"
                                 placeholder="Masukkan Nama" value="{{ old('sumber_rekening') }}" required="required"
                                 autocomplete="sumber_rekening">
+                            @error('sumber_rekening')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="sumberRekening">Sumber Rekening</label>
+                            <select name="sumber_rekening" id="sumberRekening"
+                                class="form-control @error('sumber_rekening') is-invalid @enderror">
+                                <option value="GOPAY">GOPAY</option>
+                                <option value="SHOPEE PAY">SHOPEE PAY</option>
+                                <option value="OVO">OVO</option>
+                                <option value="MISC">MISC</option>
+                            </select>
+                            @error('sumber_rekening')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div id="customNotes" class="form-group" style="display: none;">
+                            <label for="customNotesInput">Custom Notes:</label>
+                            <input type="text" id="customNotesInput" name="sumber_rekening"
+                                class="form-control @error('sumber_rekening') is-invalid @enderror">
                             @error('sumber_rekening')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -81,8 +108,8 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>                        
-                       
+                        </div>
+
                         <div class="form-group">
                             <label for="inputName">Tanggal</label>
                             <input type="date" id="inputName" name="tanggal"
@@ -117,7 +144,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>   
+                        </div>
 
                         <a href="{{ route('home') }}" class="btn btn-secondary">Cancel</a>
                         <input type="submit" value="Tambah Pemasukan" class="btn btn-success float-right">
@@ -139,5 +166,20 @@
             prevImg.src = URL.createObjectURL(file)
         }
     }
+</script>
+
+<script>
+    document.getElementById('sumberRekening').addEventListener('change', function () {
+        var customNotesDiv = document.getElementById('customNotes');
+        var customNotesInput = document.getElementById('customNotesInput');
+
+        if (this.options[this.selectedIndex].value === 'MISC') {
+            customNotesDiv.style.display = 'block';
+            customNotesInput.setAttribute('required', 'required');
+        } else {
+            customNotesDiv.style.display = 'none';
+            customNotesInput.removeAttribute('required');
+        }
+    });
 </script>
 @endsection
