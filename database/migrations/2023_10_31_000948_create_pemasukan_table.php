@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nama_kategori');
             $table->string('rekening');
-            $table->string('jumlah_pemasukan');
+            $table->decimal('jumlah_pemasukan', 10, 2);
             $table->string('catatan_pemasukan');
             $table->string('tanggal');
             $table->string('jam');
