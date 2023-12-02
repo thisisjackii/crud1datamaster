@@ -61,6 +61,7 @@
                             <label for="sumberRekening">Sumber Rekening</label>
                             <select name="sumber_rekening" id="sumberRekening"
                                 class="form-control @error('sumber_rekening') is-invalid @enderror">
+                                <option value="" disabled selected>Pilih Sumber Rekening</option>
                                 <option value="GOPAY">GOPAY</option>
                                 <option value="SHOPEE PAY">SHOPEE PAY</option>
                                 <option value="OVO">OVO</option>
