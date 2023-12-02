@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('jam_pinjaman');
             $table->string('tanggal_jatuh_tempo');
             $table->string('jam_jatuh_tempo');
-            $table->enum('status', ['sudah lunas', 'belum lunas']);
+            $table->enum('status', ['Sudah Lunas', 'Belum Lunas']);
             $table->timestamps();
         });
     }
