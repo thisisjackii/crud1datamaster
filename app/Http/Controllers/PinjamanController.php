@@ -65,7 +65,7 @@ class PinjamanController extends Controller
             ]);
 
             Pinjaman::create([
-                'rekening' => $request->rekening,
+                'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_pinjaman' => $request->jumlah_pinjaman,
                 'nama_diberi_pinjaman' => $request->nama_diberi_pinjaman,
                 'catatan_pinjaman' => $request->catatan_pinjaman,
@@ -100,7 +100,7 @@ class PinjamanController extends Controller
             ]);
 
             $pinjaman->update([
-                'rekening' => $request->rekening,
+                'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_pinjaman' => $request->jumlah_pinjaman,
                 'nama_diberi_pinjaman' => $request->nama_diberi_pinjaman,
                 'catatan_pinjaman' => $request->catatan_pinjaman,
