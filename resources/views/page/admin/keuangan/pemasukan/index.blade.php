@@ -1,12 +1,11 @@
 @extends('layouts.base_admin.base_dashboard')
 @section('judul', 'List Pemasukan')
 @section('script_head')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.datatables.net/1.11.6/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
@@ -64,9 +63,13 @@
 @endsection
 
 @section('script_footer')
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script>
+<script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
         $(document).ready(function() {
             $('#previewPemasukan').DataTable({
                 "serverSide": true,
