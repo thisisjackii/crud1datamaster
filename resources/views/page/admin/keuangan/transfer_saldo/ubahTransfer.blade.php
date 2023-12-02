@@ -62,10 +62,11 @@
                             <label for="sumberRekening">Sumber Rekening</label>
                             <select name="sumber_rekening" id="sumberRekening"
                                 class="form-control @error('sumber_rekening') is-invalid @enderror">
-                                <option value="GOPAY" {{$transfer->sumber_rekening == 'GOPAY' ? 'selected' : '' }}>GOPAY</option>
-                                <option value="SHOPEE PAY"  {{$transfer->sumber_rekening == 'SHOPEE PAY' ? 'selected' : '' }} >SHOPEE PAY</option>
+                                <option value="" disabled selected>Pilih Sumber Rekening</option>  
+                                <option value="GOPAY" {{$transfer->sumber_rekening == 'GOPAY' ? 'selected' : '' }}>Gopay</option>
+                                <option value="SHOPEE PAY"  {{$transfer->sumber_rekening == 'SHOPEE PAY' ? 'selected' : '' }} >Shopee Pay</option>
                                 <option value="OVO" {{$transfer->sumber_rekening == 'OVO' ? 'selected' : '' }}>OVO</option>
-                                <option value="MISC" {{ !in_array($transfer->sumber_rekening, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? 'selected' : '' }}>MISC</option>
+                                <option value="MISC" {{ !in_array($transfer->sumber_rekening, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? 'selected' : '' }}>Lain-Lain</option>
                             </select>
                             @error('sumber_rekening')
                             <span class="invalid-feedback" role="alert">
@@ -75,24 +76,53 @@
                         </div>
 
                         <div id="customNotes" class="form-group" style="{{ !in_array($transfer->sumber_rekening, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? 'display: block;' : 'display: none;' }}">
-                            <label for="customNotesInput">Custom Notes:</label>
-                            <input type="text" id="customNotesInput" name="sumber_rekening"
-                                class="form-control @error('sumber_rekening') is-invalid @enderror"
+                            <label for="customNotesInput">Opsi Lain:</label>
+                            <input type="text" id="customNotesInput" name="custom_notes"
+                                class="form-control @error('custom_notes') is-invalid @enderror"
                                 value="{{ !in_array($transfer->sumber_rekening, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? $transfer->sumber_rekening : '' }}">
-                            @error('sumber_rekening')
+                            @error('custom_notes')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="inputName">Tujuan Transfer</label>
                             <input type="text" id="inputName" name="tujuan_transfer"
                                 class="form-control @error('tujuan_transfer') is-invalid @enderror"
                                 placeholder="Masukkan Nama" required="required"
                                 autocomplete="tujuan_transfer" value="{{ $transfer->tujuan_transfer }}">
                             @error('tujuan_transfer')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="tujuanTransfer">Tujuan Transfer</label>
+                            <select name="tujuan_transfer" id="tujuanTransfer"
+                                class="form-control @error('tujuan_transfer') is-invalid @enderror">
+                                <option value="" disabled selected>Pilih Sumber Rekening</option>
+                                <option value="GOPAY" {{$transfer->tujuan_transfer == 'GOPAY' ? 'selected' : '' }}>Gopay</option>
+                                <option value="SHOPEE PAY"  {{$transfer->tujuan_transfer == 'SHOPEE PAY' ? 'selected' : '' }} >Shopee Pay</option>
+                                <option value="OVO" {{$transfer->tujuan_transfer == 'OVO' ? 'selected' : '' }}>OVO</option>
+                                <option value="MISC" {{ !in_array($transfer->tujuan_transfer, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? 'selected' : '' }}>Lain-Lain</option>
+                            </select>
+                            @error('tujuan_transfer')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div id="customNotes2" class="form-group" style="{{ !in_array($transfer->tujuan_transfer, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? 'display: block;' : 'display: none;' }}">
+                            <label for="customNotesInput2">Opsi Lain:</label>
+                            <input type="text" id="customNotesInput2" name="custom_notes2"
+                                class="form-control @error('custom_notes2') is-invalid @enderror"
+                                value="{{ !in_array($transfer->tujuan_transfer, ['GOPAY', 'SHOPEE PAY', 'OVO']) ? $transfer->tujuan_transfer : '' }}">
+                            @error('custom_notes2')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -175,6 +205,21 @@
     document.getElementById('sumberRekening').addEventListener('change', function () {
         var customNotesDiv = document.getElementById('customNotes');
         var customNotesInput = document.getElementById('customNotesInput');
+
+        if (this.options[this.selectedIndex].value === 'MISC') {
+            customNotesDiv.style.display = 'block';
+            customNotesInput.setAttribute('required', 'required');
+        } else {
+            customNotesDiv.style.display = 'none';
+            customNotesInput.removeAttribute('required');
+        }
+    });
+</script>
+
+<script>
+    document.getElementById('tujuanTransfer').addEventListener('change', function () {
+        var customNotesDiv = document.getElementById('customNotes2');
+        var customNotesInput = document.getElementById('customNotesInput2');
 
         if (this.options[this.selectedIndex].value === 'MISC') {
             customNotesDiv.style.display = 'block';
