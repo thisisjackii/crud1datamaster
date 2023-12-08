@@ -59,8 +59,8 @@ class TransferController extends Controller
             ]);
 
             TransferSaldo::create([
-                'sumber_rekening' => $request->sumber_rekening,
-                'tujuan_transfer' => $request->tujuan_transfer,
+                'sumber_rekening' => $request->sumber_rekening === 'MISC' ? $request->custom_notes : $request->sumber_rekening,
+                'tujuan_transfer' => $request->tujuan_transfer === 'MISC' ? $request->custom_notes2 : $request->tujuan_transfer,
                 'jumlah_transfer' => $request->jumlah_transfer,
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,
@@ -89,8 +89,8 @@ class TransferController extends Controller
             ]);
 
             $transfer->update([
-                'sumber_rekening' => $request->sumber_rekening,
-                'tujuan_transfer' => $request->tujuan_transfer,
+                'sumber_rekening' => $request->sumber_rekening === 'MISC' ? $request->custom_notes : $request->sumber_rekening,
+                'tujuan_transfer' => $request->tujuan_transfer === 'MISC' ? $request->custom_notes2 : $request->tujuan_transfer,
                 'jumlah_transfer' => $request->jumlah_transfer,
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,

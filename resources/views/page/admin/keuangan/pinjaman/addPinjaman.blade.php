@@ -44,16 +44,38 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="rekening">Pilih Rekening</label>
-                            <select class="form-control" id="rekening" name="rekening" required>
+                    <div class="form-group">
+                            <label for="Rekening">Rekening</label>
+                            <select name="rekening" id="Rekening"
+                                class="form-control @error('rekening') is-invalid @enderror">
+                                <option value="" disabled selected>Pilih Rekening</option>  
                                 <option value="BCA">BCA (Bank Central Asia)</option>
                                 <option value="BRI">BRI (Bank Rakyat Indonesia)</option>
                                 <option value="BNI">BNI (Bank Negara Indonesia)</option>
                                 <option value="Mandiri">Mandiri (Bank Mandiri)</option>
                                 <option value="CIMB">CIMB Niaga</option>
                                 <option value="Maybank">Maybank Indonesia</option>
+                                <option value="GOPAY">GOPAY</option>
+                                <option value="SHOPEE PAY">SHOPEE PAY</option>
+                                <option value="OVO">OVO</option>
+                                <option value="Lainnya">Lainnya</option>
                             </select>
+                            @error('rekening')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div id="customNotes2" class="form-group" style="display: none;">
+                            <label for="customNotesInput2">Rekening Lainnya:</label>
+                            <input type="text" id="customNotesInput2" name="custom_notes2"
+                                class="form-control @error('custom_notes2') is-invalid @enderror">
+                            @error('custom_notes2')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -172,11 +194,17 @@
 </section>
 @endsection @section('script_footer')
 <script>
-    inputFoto.onchange = evt => {
-        const [file] = inputFoto.files
-        if (file) {
-            prevImg.src = URL.createObjectURL(file)
+    document.getElementById('Rekening').addEventListener('change', function () {
+        var customNotesDiv = document.getElementById('customNotes2');
+        var customNotesInput = document.getElementById('customNotesInput2');
+
+        if (this.options[this.selectedIndex].value === 'Lainnya') {
+            customNotesDiv.style.display = 'block';
+            customNotesInput.setAttribute('required', 'required');
+        } else {
+            customNotesDiv.style.display = 'none';
+            customNotesInput.removeAttribute('required');
         }
-    }
+    });
 </script>
 @endsection

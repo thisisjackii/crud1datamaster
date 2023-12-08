@@ -54,8 +54,8 @@ class PemasukanController extends Controller
             ]);
 
             Pemasukan::create([
-                'nama_kategori' => $request->nama_kategori,
-                'rekening' => $request->rekening,
+                'nama_kategori' => $request->nama_kategori === 'Lainnya' ? $request->custom_notes : $request->nama_kategori,
+                'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_pemasukan' => $request->jumlah_pemasukan,
                 'catatan_pemasukan' => $request->catatan_pemasukan,
                 'tanggal' => $request->tanggal,
@@ -83,8 +83,8 @@ class PemasukanController extends Controller
             ]);
 
             $pemasukan->update([
-                'nama_kategori' => $request->nama_kategori,
-                'rekening' => $request->rekening,
+                'nama_kategori' => $request->nama_kategori === 'Lainnya' ? $request->custom_notes : $request->nama_kategori,
+                'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_pemasukan' => $request->jumlah_pemasukan,
                 'catatan_pemasukan' => $request->catatan_pemasukan,
                 'tanggal' => $request->tanggal,
