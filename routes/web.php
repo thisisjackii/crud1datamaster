@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PemasukanImportController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PengeluaranReportController;
 use App\Http\Controllers\HutangController;
 use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
+use App\Http\Controllers\PengeluaranImportController;
+
 use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,15 +51,22 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::delete('{id}/hapus', 'hapusAkun')->name('delete');
         });
 
-        Route::controller(PemasukanController::class)
-            ->prefix('pemasukan')
-            ->as('pemasukan.')
+    Route::controller(PemasukanController::class)
+        ->prefix('pemasukan')
+        ->as('pemasukan.')
+        ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('showdata', 'dataTable')->name('dataTable');
+        Route::match(['get','post'],'tambah', 'tambahPemasukan')->name('add');
+        Route::match(['get','post'],'{id}/ubah', 'ubahPemasukan')->name('edit');
+        Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
+        });
+
+            Route::controller(PemasukanImportController::class)
+            ->prefix('import')
+            ->as('import.')
             ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('showdata', 'dataTable')->name('dataTable');
-            Route::match(['get','post'],'tambah', 'tambahPemasukan')->name('add');
-            Route::match(['get','post'],'{id}/ubah', 'ubahPemasukan')->name('edit');
-            Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
+                Route::post('/','index')->name('index');
             });
 
     Route::controller(PengeluaranController::class)
@@ -68,6 +78,16 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
            Route::match(['get','post'],'tambah', 'tambahPengeluaran')->name('add');
            Route::match(['get','post'],'{id}/ubah', 'ubahPengeluaran')->name('edit');
            Route::delete('{id}/hapus', 'hapusPengeluaran')->name('delete');
+           Route::get('pengeluaran/export', 'export')->name('export');
+           Route::get('pengeluaran/generate', 'exportPdf')->name('exportPdf');;
+        //    Route::post('/','import')->name('pengeluaran.import');     
+        });
+
+        Route::controller(PengeluaranImportController::class)
+        ->prefix('import')
+        ->as('import.')
+        ->group(function () {
+            Route::post('/','index')->name('index');
         });
 
         Route::controller(PengeluaranReportController::class)
@@ -98,6 +118,13 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::match(['get', 'post'], 'tambah', 'tambahPinjaman')->name('add');
             Route::match(['get', 'post'], '{id}/ubah', 'ubahPinjaman')->name('edit');
             Route::delete('{id}/hapus', 'hapusPinjaman')->name('delete');
+        });
+
+        Route::controller(PinjamanImportController::class)
+        ->prefix('import')
+        ->as('import.')
+        ->group(function () {
+              Route::post('/','index')->name('index');
         });
 
     Route::controller(TransferController::class)

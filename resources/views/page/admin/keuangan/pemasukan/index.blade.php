@@ -42,6 +42,16 @@
                 </div>
             </div>
             <div class="card-body p-0" style="margin: 20px">
+            
+            <form method="post" action="{{route('import.index')}}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file">Upload Excel File:</label>
+                    <input type="file" name="file" id="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-info">Upload</button>
+            </form>
+            
                 <table id="previewPemasukan" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                         <tr>

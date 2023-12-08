@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Exports\PengeluaranExport;
+use App\Imports\PengeluaranImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
 {
@@ -106,5 +109,15 @@ class PengeluaranController extends Controller
         return response()->json([
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
+    }
+
+    public function exportPdf() 
+    {
+        return Excel::download(new PengeluaranExport, 'pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new PengeluaranExport, 'pengeluaran.xlsx');
     }
 }
