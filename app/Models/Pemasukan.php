@@ -22,6 +22,12 @@ class Pemasukan extends Model
         'jumlah_pemasukan',
         'catatan_pemasukan',
         'tanggal',
-        'jam'
+        'jam',
+        'user_id', // Add user_id as a foreign key
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

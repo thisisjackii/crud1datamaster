@@ -21,7 +21,9 @@ return new class extends Migration
             $table->date('tanggal');
             $table->string('jam');
             $table->integer('biaya_admin');
-            $table->timestamps(); 
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

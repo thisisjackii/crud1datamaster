@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('tanggal_jatuh_tempo');
             $table->string('jam_jatuh_tempo');
             $table->enum('status', ['Sudah Lunas', 'Belum Lunas']);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
