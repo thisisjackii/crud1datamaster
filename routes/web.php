@@ -9,7 +9,7 @@ use App\Http\Controllers\HutangController;
 use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
 use App\Http\Controllers\PengeluaranImportController;
-
+use App\Http\Controllers\PinjamanImportController;
 use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
