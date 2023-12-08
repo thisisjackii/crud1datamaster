@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class PengeluaranController extends Controller
@@ -17,18 +16,7 @@ class PengeluaranController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $columns = [
-                'nama_kategori',
-                'nama_pengeluaran',
-                'tujuan_transaksi',
-                'kuantitas',
-                'harga_peritem',
-                'tanggal',
-                'jam',
-                'id',
-            ];
-
-            $data = Pengeluaran::select($columns);
+            $data = Pengeluaran::where('user_id', auth()->id())->select('nama_kategori', 'nama_pengeluaran', 'tujuan_transaksi', 'kuantitas', 'harga_peritem', 'tanggal', 'jam', 'id');
 
             return DataTables::of($data)
                 ->addColumn('options', function ($row) {
@@ -68,6 +56,7 @@ class PengeluaranController extends Controller
                 'harga_peritem' => $request->harga_peritem,
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,
+                'user_id' => auth()->id(),
             ]);
 
             return redirect()->route('pengeluaran.add')->with('status', 'Data telah tersimpan di database');
@@ -78,7 +67,7 @@ class PengeluaranController extends Controller
 
     public function ubahPengeluaran($id, Request $request)
     {
-        $pengeluaran = Pengeluaran::findOrFail($id);
+        $pengeluaran = Pengeluaran::where('user_id', auth()->id())->findOrFail($id);
 
         if ($request->isMethod('post')) {
             $this->validate($request, [
@@ -101,7 +90,7 @@ class PengeluaranController extends Controller
                 'jam' => $request->jam,
             ]);
 
-            return redirect()->route('pengeluaran.index', ['id' => $pengeluaran->id])->with('status', 'Data telah tersimpan di database');
+            return redirect()->route('pengeluaran.index')->with('status', 'Data telah tersimpan di database');
         }
 
         return view('page.admin.keuangan.pengeluaran.ubahPengeluaran', [
@@ -111,7 +100,7 @@ class PengeluaranController extends Controller
 
     public function hapusPengeluaran($id)
     {
-        $pengeluaran = Pengeluaran::findOrFail($id);
+        $pengeluaran = Pengeluaran::where('user_id', auth()->id())->findOrFail($id);
         $pengeluaran->delete();
 
         return response()->json([
@@ -119,4 +108,3 @@ class PengeluaranController extends Controller
         ]);
     }
 }
-

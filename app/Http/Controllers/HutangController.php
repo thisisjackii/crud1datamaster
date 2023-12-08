@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Hutang;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class HutangController extends Controller
@@ -30,7 +29,7 @@ class HutangController extends Controller
                 'id',
             ];
 
-            $data = Hutang::select($columns);
+            $data = Hutang::select($columns)->where('user_id', auth()->id());
 
             return DataTables::of($data)
                 ->addColumn('options', function ($row) {
@@ -74,6 +73,7 @@ class HutangController extends Controller
                 'tanggal_jatuh_tempo' => $request->tanggal_jatuh_tempo,
                 'jam_jatuh_tempo' => $request->jam_jatuh_tempo,
                 'status' => $request->status,
+                'user_id' => auth()->id(),
             ]);
 
             return redirect()->route('hutang.add')->with('status', 'Data telah tersimpan di database');
@@ -84,7 +84,7 @@ class HutangController extends Controller
 
     public function ubahHutang($id, Request $request)
     {
-        $hutang = Hutang::findOrFail($id);
+        $hutang = Hutang::where('user_id', auth()->id())->findOrFail($id);
 
         if ($request->isMethod('post')) {
             $this->validate($request, [
@@ -121,7 +121,7 @@ class HutangController extends Controller
 
     public function hapusHutang($id)
     {
-        $hutang = Hutang::findOrFail($id);
+        $hutang = Hutang::where('user_id', auth()->id())->findOrFail($id);
         $hutang->delete();
 
         return response()->json([

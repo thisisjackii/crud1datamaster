@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\User;
 use App\Models\Pemasukan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-
 use Yajra\DataTables\DataTables;
 
 class PemasukanController extends Controller
 {
-
     public function index()
     {
         return view('page.admin.keuangan.pemasukan.index');
@@ -22,7 +16,7 @@ class PemasukanController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = Pemasukan::select('*');
+            $data = Pemasukan::where('user_id', auth()->id())->select('*');
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -37,8 +31,6 @@ class PemasukanController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-        // return view('page.admin.keuangan.pemasukan.index');
     }
 
     public function tambahPemasukan(Request $request)
@@ -60,6 +52,7 @@ class PemasukanController extends Controller
                 'catatan_pemasukan' => $request->catatan_pemasukan,
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,
+                'user_id' => auth()->id(),
             ]);
 
             return redirect()->route('pemasukan.add')->with('status', 'Data telah tersimpan di database');
@@ -70,7 +63,7 @@ class PemasukanController extends Controller
 
     public function ubahPemasukan($id, Request $request)
     {
-        $pemasukan = Pemasukan::findOrFail($id);
+        $pemasukan = Pemasukan::where('user_id', auth()->id())->findOrFail($id);
 
         if ($request->isMethod('post')) {
             $this->validate($request, [
@@ -101,7 +94,7 @@ class PemasukanController extends Controller
 
     public function hapusPemasukan($id)
     {
-        $pemasukan = Pemasukan::findOrFail($id);
+        $pemasukan = Pemasukan::where('user_id', auth()->id())->findOrFail($id);
         $pemasukan->delete();
 
         return response()->json([
