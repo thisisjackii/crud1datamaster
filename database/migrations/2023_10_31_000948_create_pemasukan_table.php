@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('catatan_pemasukan');
             $table->string('tanggal');
             $table->string('jam');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

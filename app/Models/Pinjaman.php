@@ -21,5 +21,11 @@ class Pinjaman extends Model
         'tanggal_jatuh_tempo',
         'jam_jatuh_tempo',
         'status',
+        'user_id', // Add user_id as a foreign key
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

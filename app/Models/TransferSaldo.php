@@ -16,5 +16,11 @@ class TransferSaldo extends Model
         'tanggal',
         'jam',
         'biaya_admin',
+        'user_id', // Add user_id as a foreign key
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

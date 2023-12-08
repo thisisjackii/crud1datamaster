@@ -8,6 +8,10 @@ use App\Http\Controllers\PengeluaranReportController;
 use App\Http\Controllers\HutangController;
 use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
+use App\Http\Controllers\PengeluaranImportController;
+
+use App\Http\Controllers\PemasukanImportController;
+
 use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +64,13 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
         });
 
+            Route::controller(PemasukanImportController::class)
+            ->prefix('import')
+            ->as('import.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
+
     Route::controller(PengeluaranController::class)
         ->prefix('pengeluaran')
         ->as('pengeluaran.')
@@ -69,6 +80,16 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
            Route::match(['get','post'],'tambah', 'tambahPengeluaran')->name('add');
            Route::match(['get','post'],'{id}/ubah', 'ubahPengeluaran')->name('edit');
            Route::delete('{id}/hapus', 'hapusPengeluaran')->name('delete');
+           Route::get('pengeluaran/export', 'export')->name('export');
+           Route::get('pengeluaran/generate', 'exportPdf')->name('exportPdf');;
+        //    Route::post('/','import')->name('pengeluaran.import');     
+        });
+
+        Route::controller(PengeluaranImportController::class)
+        ->prefix('import')
+        ->as('import.')
+        ->group(function () {
+            Route::post('/','index')->name('index');
         });
 
         Route::controller(PengeluaranReportController::class)
