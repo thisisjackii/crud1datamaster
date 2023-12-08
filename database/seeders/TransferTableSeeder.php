@@ -15,19 +15,21 @@ class TransferTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
-            [
-                'sumber_rekening' => '123456789',
-                'tujuan_transfer' => '987654321',
-                'jumlah_transfer' => 1000,
-                'tanggal' => now(),
-                'jam' => 12,
-                'biaya_admin' => 5,
-            ],
-            // Add more data as needed
-        ];
+        // You can adjust the number of records you want to seed
+        $numberOfRecords = 10;
 
-        // Insert data into the transfers table
-        DB::table('transfer_saldo')->insert($data);
+        for ($i = 0; $i < $numberOfRecords; $i++) {
+            DB::table('transfer_saldo')->insert([
+                'sumber_rekening' => rand(100000000, 999999999) . '',
+                'tujuan_transfer' => rand(100000000, 999999999) . '',
+                'jumlah_transfer' => rand(100, 999) * 1000,
+                'tanggal' => now()->toDateString(),
+                'jam' => now()->toTimeString(),
+                'biaya_admin' => rand(100, 999) * 1000,
+                'user_id' => ($i % 2 == 0) ? 2 : 1, // Replace with the actual user_id
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

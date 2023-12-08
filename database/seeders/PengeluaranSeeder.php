@@ -24,9 +24,10 @@ class PengeluaranSeeder extends Seeder
                 'nama_pengeluaran' => 'Expense ' . ($i + 1),
                 'tujuan_transaksi' => 'Transaction Purpose ' . ($i + 1),
                 'kuantitas' => rand(1, 10),
-                'harga_peritem' => rand(10, 100),
+                'harga_peritem' => rand(100, 999) * 1000,
                 'tanggal' => now()->toDateString(),
                 'jam' => now()->toTimeString(),
+                'user_id' => ($i % 2 == 0) ? 2 : 1, // Replace with the actual user_id
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

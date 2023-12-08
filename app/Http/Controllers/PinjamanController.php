@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pinjaman;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class PinjamanController extends Controller
@@ -17,20 +16,7 @@ class PinjamanController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $columns = [
-                'rekening',
-                'jumlah_pinjaman',
-                'nama_diberi_pinjaman',
-                'catatan_pinjaman',
-                'tanggal_pinjaman',
-                'jam_pinjaman',
-                'tanggal_jatuh_tempo',
-                'jam_jatuh_tempo',
-                'status',
-                'id',
-            ];
-
-            $data = Pinjaman::select($columns);
+            $data = Pinjaman::where('user_id', auth()->id())->select('rekening', 'jumlah_pinjaman', 'nama_diberi_pinjaman', 'catatan_pinjaman', 'tanggal_pinjaman', 'jam_pinjaman', 'tanggal_jatuh_tempo', 'jam_jatuh_tempo', 'status', 'id');
 
             return DataTables::of($data)
                 ->addColumn('options', function ($row) {
@@ -74,6 +60,7 @@ class PinjamanController extends Controller
                 'tanggal_jatuh_tempo' => $request->tanggal_jatuh_tempo,
                 'jam_jatuh_tempo' => $request->jam_jatuh_tempo,
                 'status' => $request->status,
+                'user_id' => auth()->id(),
             ]);
 
             return redirect()->route('pinjaman.add')->with('status', 'Data telah tersimpan di database');
@@ -84,7 +71,7 @@ class PinjamanController extends Controller
 
     public function ubahPinjaman($id, Request $request)
     {
-        $pinjaman = Pinjaman::findOrFail($id);
+        $pinjaman = Pinjaman::where('user_id', auth()->id())->findOrFail($id);
 
         if ($request->isMethod('post')) {
             $this->validate($request, [
@@ -121,7 +108,7 @@ class PinjamanController extends Controller
 
     public function hapusPinjaman($id)
     {
-        $pinjaman = Pinjaman::findOrFail($id);
+        $pinjaman = Pinjaman::where('user_id', auth()->id())->findOrFail($id);
         $pinjaman->delete();
 
         return response()->json([

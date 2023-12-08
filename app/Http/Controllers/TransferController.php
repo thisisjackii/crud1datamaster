@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\TransferSaldo;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class TransferController extends Controller
@@ -14,20 +14,11 @@ class TransferController extends Controller
     {
         return view('page.admin.keuangan.transfer_saldo.index');
     }
+
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $columns = [
-                'sumber_rekening',
-                'tujuan_transfer',
-                'jumlah_transfer',
-                'tanggal',
-                'jam',
-                'biaya_admin',
-                'id',
-            ];
-
-            $data = TransferSaldo::select($columns);
+            $data = TransferSaldo::where('user_id', auth()->id())->select('sumber_rekening', 'tujuan_transfer', 'jumlah_transfer', 'tanggal', 'jam', 'biaya_admin', 'id');
 
             return DataTables::of($data)
                 ->addColumn('options', function ($row) {
@@ -65,6 +56,7 @@ class TransferController extends Controller
                 'tanggal' => $request->tanggal,
                 'jam' => $request->jam,
                 'biaya_admin' => $request->biaya_admin,
+                'user_id' => auth()->id(),
             ]);
 
             return redirect()->route('transfer_saldo.add')->with('status', 'Data telah tersimpan di database');
@@ -73,10 +65,9 @@ class TransferController extends Controller
         return view('page.admin.keuangan.transfer_saldo.addTransfer');
     }
 
-
     public function ubahTransfer($id, Request $request)
     {
-        $transfer = TransferSaldo::findOrFail($id);
+        $transfer = TransferSaldo::where('user_id', auth()->id())->findOrFail($id);
 
         if ($request->isMethod('post')) {
             $this->validate($request, [
@@ -104,9 +95,10 @@ class TransferController extends Controller
             'transfer' => $transfer
         ]);
     }
+
     public function hapusTransfer($id)
     {
-        $transfer = TransferSaldo::findOrFail($id);
+        $transfer = TransferSaldo::where('user_id', auth()->id())->findOrFail($id);
         $transfer->delete();
 
         return response()->json([

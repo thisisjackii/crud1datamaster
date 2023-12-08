@@ -14,10 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
+        for ($i = 0; $i < 2; $i++) {
+            DB::table('users')->insert([
+                'name' => Str::random(10),
+                'email' => Str::random(10).'@gmail.com',
+                'password' => Hash::make('password'),
+            ]);
+        }
+
+        $this->call([
+            HutangSeeder::class,
+            PemasukanSeeder::class,
+            PengeluaranSeeder::class,
+            TransferTableSeeder::class,
+            // Add other seeders here
         ]);
     }
 }
