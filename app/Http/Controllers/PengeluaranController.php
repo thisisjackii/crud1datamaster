@@ -113,11 +113,15 @@ class PengeluaranController extends Controller
 
     public function exportPdf() 
     {
-        return Excel::download(new PengeluaranExport, 'pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        $user_id = auth()->id();
+        // return Excel::download(new PengeluaranExport, 'pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        return (new PengeluaranExport)->forUserId($user_id)->download('pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
     public function export() 
     {
-        return Excel::download(new PengeluaranExport, 'pengeluaran.xlsx');
-    }
+        $user_id = auth()->id();
+    
+        return (new PengeluaranExport)->forUserId($user_id)->download('pengeluaran.xlsx');
+    }    
 }
