@@ -14,6 +14,14 @@ class PinjamanImport implements ToModel, WithCustomCsvSettings, WithHeadingRow
     *
     * @return Pinjaman|null
     */
+
+    protected $userId;
+
+    public function __construct($userId)
+    {
+        $this->userId = $userId;
+    }
+
     public function model(array $row)
     {
         return new Pinjaman([
@@ -26,6 +34,7 @@ class PinjamanImport implements ToModel, WithCustomCsvSettings, WithHeadingRow
             'tanggal_jatuh_tempo' => $row['tanggal_jatuh_tempo'],
             'jam_jatuh_tempo' => $row['jam_jatuh_tempo'],
             'status' => $row['status'],
+            'user_id' => $this->userId, // Set the user_id from the constructor
         ]);
     }
 
