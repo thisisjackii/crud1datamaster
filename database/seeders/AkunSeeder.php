@@ -19,13 +19,8 @@ class AkunSeeder extends Seeder
         $faker = Faker::create();
         $imagePath = 'public/user_images';
         Storage::makeDirectory($imagePath);
-        // $imagePath = storage_path('app/public/user_images');
-        // if (!file_exists($imagePath)) {
-        //     mkdir($imagePath, 0777, true);
-        // }
 
-        foreach (range(1, 2) as $index) {
-            // $imageFileName = $faker->image($imagePath, 200, 200, 'people', false);
+        for ($i = 0; $i < 1; $i++) {
             $filename = "user1-128x128.jpg";
             Storage::copy("public/user_images_template/{$filename}", "{$imagePath}/{$filename}");
 
