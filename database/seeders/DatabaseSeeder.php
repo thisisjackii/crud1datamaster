@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             PemasukanSeeder::class,
             PengeluaranSeeder::class,
             TransferTableSeeder::class,
+            PinjamanSeeder::class,
             // Add other seeders here
         ]);
     }
