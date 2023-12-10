@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pemasukan;
+use App\Exports\PemasukanExport;
+use App\Imports\PemasukanImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -105,6 +108,18 @@ class PemasukanController extends Controller
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
     }
+
+    public function exportPdf() 
+    {
+        $user_id = auth()->id();
+        return (new PemasukanExport)->forUserId($user_id)->download('pemasukan.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function export() 
+    {
+        $user_id = auth()->id();
+        return (new PemasukanExport)->forUserId($user_id)->download('pemasukan.xlsx');
+    }  
 
     public function jumlahPemasukan()
     {
