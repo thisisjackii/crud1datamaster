@@ -3,6 +3,7 @@
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PemasukanImportController;
+use App\Http\Controllers\PemasukanReportController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PengeluaranReportController;
 use App\Http\Controllers\HutangController;
@@ -60,11 +61,20 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         Route::match(['get','post'],'tambah', 'tambahPemasukan')->name('add');
         Route::match(['get','post'],'{id}/ubah', 'ubahPemasukan')->name('edit');
         Route::delete('{id}/hapus', 'hapusPemasukan')->name('delete');
+        Route::get('pemasukan/export', 'export')->name('export');
+        Route::get('pemasukan/generate', 'exportPdf')->name('exportPdf');;
         });
 
             Route::controller(PemasukanImportController::class)
             ->prefix('import')
             ->as('import.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
+
+            Route::controller(PemasukanReportController::class)
+            ->prefix('report')
+            ->as('report.')
             ->group(function () {
                 Route::post('/','index')->name('index');
             });
