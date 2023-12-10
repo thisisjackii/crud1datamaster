@@ -51,6 +51,11 @@
             </div>
         </div>
         <div class="card-body p-0" style="margin: 20px">
+        <form method="post" action="{{route('report.index')}}">
+            @csrf
+                <input type="submit" value="Cetak Word">
+            </form>
+
             <form method="post" action="{{route('import.index')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
@@ -59,6 +64,15 @@
                 </div>
                 <button type="submit" class="btn btn-info">Upload</button>
             </form>
+
+
+            <a href="{{route('pinjaman.export')}}">
+                <button>tset</button>
+            </a>
+
+            <a href="{{route('pinjaman.exportPdf')}}">
+                <button>Save PDF</button>
+            </a>
             <table
                 id="previewPinjaman"
                 class="table table-striped table-bordered display"

@@ -11,6 +11,7 @@ use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
 use App\Http\Controllers\PengeluaranImportController;
 use App\Http\Controllers\PinjamanImportController;
+use App\Http\Controllers\PinjamanReportController;
 use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -128,6 +129,8 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::match(['get', 'post'], 'tambah', 'tambahPinjaman')->name('add');
             Route::match(['get', 'post'], '{id}/ubah', 'ubahPinjaman')->name('edit');
             Route::delete('{id}/hapus', 'hapusPinjaman')->name('delete');
+            Route::get('pemasukan/export', 'export')->name('export');
+            Route::get('pemasukan/generate', 'exportPdf')->name('exportPdf');;
         });
 
         Route::controller(PinjamanImportController::class)
@@ -136,6 +139,13 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         ->group(function () {
               Route::post('/','index')->name('index');
         });
+
+        Route::controller(PemasukanReportController::class)
+            ->prefix('report')
+            ->as('report.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
 
     Route::controller(TransferController::class)
     ->prefix('transfer_saldo')
