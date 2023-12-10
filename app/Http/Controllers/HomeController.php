@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
+use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PengeluaranController;
+
 class HomeController extends Controller
 {
     /**
@@ -25,9 +28,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(PemasukanController $pemasukanController, PengeluaranController $pengeluaranController)
     {
-        return view('home');
+        $sumOfJumlahPemasukan = $pemasukanController->jumlahPemasukan();
+        $sumOfJumlahPengeluaran = $pengeluaranController->jumlahPengeluaran();
+        $categoryTotalsPemasukan = $pemasukanController->totalKategoriPemasukan();
+        $categoryTotalsPengeluaran = $pengeluaranController->totalKategoriPengeluaran();
+
+        return view('home', compact('sumOfJumlahPemasukan','sumOfJumlahPengeluaran','categoryTotalsPemasukan','categoryTotalsPengeluaran'));
     }
 
     public function profile()
@@ -71,4 +79,5 @@ class HomeController extends Controller
             return redirect()->route('profile')->with('status', 'Perubahan telah tersimpan');
         }
     }
+  
 }

@@ -13,6 +13,10 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class PengeluaranReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 	public function index(Request $request){
 		$data = Pengeluaran::select('id', 'nama_kategori', 'nama_pengeluaran', 'tujuan_transaksi', 'kuantitas', 'harga_peritem', 'tanggal')->get();

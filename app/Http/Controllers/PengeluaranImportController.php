@@ -9,6 +9,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranImportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         Excel::import(new PengeluaranImport, request()->file('file'));

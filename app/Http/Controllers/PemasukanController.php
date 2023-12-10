@@ -8,6 +8,10 @@ use Yajra\DataTables\DataTables;
 
 class PemasukanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('page.admin.keuangan.pemasukan.index');
@@ -100,5 +104,24 @@ class PemasukanController extends Controller
         return response()->json([
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
+    }
+
+    public function jumlahPemasukan()
+    {
+        $sumOfJumlahPemasukan = Pemasukan::where('user_id', auth()->id())->sum('jumlah_pemasukan');
+        $formattedPemasukan = 'Rp' . number_format($sumOfJumlahPemasukan, 2, ',', '.');
+
+        return $formattedPemasukan;
+    }
+    public function totalKategoriPemasukan()
+    {
+        $categoryTotals = Pemasukan::select('nama_kategori', \DB::raw('SUM(jumlah_pemasukan) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('nama_kategori')
+            ->get();
+
+        $formattedData = json_encode($categoryTotals);
+
+        return $formattedData;
     }
 }

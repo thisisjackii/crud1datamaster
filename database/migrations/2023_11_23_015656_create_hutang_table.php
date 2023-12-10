@@ -13,12 +13,12 @@ return new class extends Migration
         Schema::create('hutang', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('rekening');
-            $table->decimal('jumlah_hutang', 10, 2);
+            $table->integer('jumlah_hutang');
             $table->string('nama_pemberi_hutang');
             $table->text('catatan_hutang')->nullable();
-            $table->string('tanggal_hutang');
+            $table->date('tanggal_hutang');
             $table->string('jam_hutang');
-            $table->string('tanggal_jatuh_tempo');
+            $table->date('tanggal_jatuh_tempo');
             $table->string('jam_jatuh_tempo');
             $table->enum('status', ['Sudah Lunas', 'Belum Lunas']);
             $table->unsignedBigInteger('user_id');

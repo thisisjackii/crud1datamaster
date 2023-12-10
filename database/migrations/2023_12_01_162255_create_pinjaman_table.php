@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('pinjaman', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('rekening');
-            $table->decimal('jumlah_pinjaman', 10, 2);
+            $table->integer('jumlah_pinjaman');
             $table->string('nama_diberi_pinjaman');
             $table->text('catatan_pinjaman')->nullable();
             $table->date('tanggal_pinjaman');

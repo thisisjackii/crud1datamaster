@@ -8,6 +8,10 @@ use Yajra\DataTables\DataTables;
 
 class PinjamanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('page.admin.keuangan.pinjaman.index');

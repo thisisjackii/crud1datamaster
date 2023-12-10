@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('nama_kategori');
             $table->string('nama_pengeluaran');
             $table->string('tujuan_transaksi');
-            $table->string('kuantitas');
-            $table->string('harga_peritem');
-            $table->string('tanggal');
+            $table->integer('kuantitas');
+            $table->integer('harga_peritem');
+            $table->date('tanggal');
             $table->string('jam');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

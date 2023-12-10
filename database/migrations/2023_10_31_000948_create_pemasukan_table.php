@@ -17,9 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nama_kategori');
             $table->string('rekening');
-            $table->decimal('jumlah_pemasukan', 10, 2);
-            $table->string('catatan_pemasukan');
-            $table->string('tanggal');
+            $table->integer('jumlah_pemasukan');
+            $table->string('catatan_pemasukan')->nullable();
+            $table->date('tanggal');
             $table->string('jam');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

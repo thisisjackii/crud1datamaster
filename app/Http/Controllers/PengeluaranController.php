@@ -11,6 +11,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('page.admin.keuangan.pengeluaran.index');
@@ -123,5 +127,25 @@ class PengeluaranController extends Controller
         $user_id = auth()->id();
     
         return (new PengeluaranExport)->forUserId($user_id)->download('pengeluaran.xlsx');
+    }    
+
+    public function jumlahPengeluaran()
+    {
+        $sumOfJumlahPengeluaran = Pengeluaran::where('user_id', auth()->id())->sum(\DB::raw('kuantitas * harga_peritem'));
+        $formattedPengeluaran = 'Rp' . number_format($sumOfJumlahPengeluaran, 2, ',', '.');
+
+        return $formattedPengeluaran; 
+    }     
+
+    public function totalKategoriPengeluaran()
+    {
+        $categoryTotals = Pengeluaran::select('nama_kategori', \DB::raw('SUM(kuantitas * harga_peritem) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('nama_kategori')
+            ->get();
+
+        $formattedData = json_encode($categoryTotals);
+
+        return $formattedData;
     }    
 }

@@ -10,6 +10,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PinjamanImportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $userId = Auth::id(); // Get the user ID from the authenticated user
