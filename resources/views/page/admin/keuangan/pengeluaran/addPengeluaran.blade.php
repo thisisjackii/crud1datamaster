@@ -44,18 +44,51 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="inputName">Nama Kategori</label>
-                            <input type="text" id="inputName" name="nama_kategori"
-                                class="form-control @error('nama_kategori') is-invalid @enderror"
-                                placeholder="Masukkan Nama" value="{{ old('nama_kategori') }}" required="required"
-                                autocomplete="nama_kategori">
-                            @error('nama_kategori')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
+                    <div class="form-group">
+                        <label for="NamaKategori">Nama Kategori</label>
+                        <select name="nama_kategori" id="NamaKategori" class="form-control @error('nama_kategori') is-invalid @enderror">
+                            <option value="" disabled selected>Pilih Kategori Pengeluaran</option>  
+                            <option value="Air">Air</option>
+                            <option value="Belanja">Belanja</option>
+                            <option value="Bensin">Bensin</option>
+                            <option value="Bus">Bus</option>
+                            <option value="Dapur">Dapur</option>
+                            <option value="Elektronik">Elektronik</option>
+                            <option value="Film">Film</option>
+                            <option value="Kereta">Kereta</option>
+                            <option value="Kesehatan">Kesehatan</option>
+                            <option value="Lampu">Lampu</option>
+                            <option value="Listrik">Listrik</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Minuman">Minuman</option>
+                            <option value="Mobil">Mobil</option>
+                            <option value="Motor">Motor</option>
+                            <option value="Olahraga">Olahraga</option>
+                            <option value="Peliharaan">Peliharaan</option>
+                            <option value="Pendidikan">Pendidikan</option>
+                            <option value="Penerbangan">Penerbangan</option>
+                            <option value="Perabotan">Perabotan</option>
+                            <option value="Permainan">Permainan</option>
+                            <option value="Tiket">Tiket</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                        @error('nama_kategori')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div id="customNotes" class="form-group" style="display: none;">
+                        <label for="customNotesInput">Kategori Pengeluaran Lainnya:</label>
+                        <input type="text" id="customNotesInput" name="custom_notes"
+                            class="form-control @error('custom_notes') is-invalid @enderror">
+                        @error('custom_notes')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
                         <div class="form-group">
                             <label for="inputName">Nama Pengeluaran</label>
@@ -146,11 +179,17 @@
 
 @endsection @section('script_footer')
 <script>
-    inputFoto.onchange = evt => {
-        const [file] = inputFoto.files
-        if (file) {
-            prevImg.src = URL.createObjectURL(file)
+    document.getElementById('NamaKategori').addEventListener('change', function () {
+        var customNotesDiv = document.getElementById('customNotes');
+        var customNotesInput = document.getElementById('customNotesInput');
+
+        if (this.options[this.selectedIndex].value === 'Lainnya') {
+            customNotesDiv.style.display = 'block';
+            customNotesInput.setAttribute('required', 'required');
+        } else {
+            customNotesDiv.style.display = 'none';
+            customNotesInput.removeAttribute('required');
         }
-    }
+    });
 </script>
 @endsection

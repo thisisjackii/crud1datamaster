@@ -56,7 +56,7 @@ class PengeluaranController extends Controller
             ]);
 
             Pengeluaran::create([
-                'nama_kategori' => $request->nama_kategori,
+                'nama_kategori' => $request->nama_kategori === 'Lainnya' ? $request->custom_notes : $request->nama_kategori,
                 'nama_pengeluaran' => $request->nama_pengeluaran,
                 'tujuan_transaksi' => $request->tujuan_transaksi,
                 'kuantitas' => $request->kuantitas,
@@ -88,7 +88,7 @@ class PengeluaranController extends Controller
             ]);
 
             $pengeluaran->update([
-                'nama_kategori' => $request->nama_kategori,
+                'nama_kategori' => $request->nama_kategori === 'Lainnya' ? $request->custom_notes : $request->nama_kategori,
                 'nama_pengeluaran' => $request->nama_pengeluaran,
                 'tujuan_transaksi' => $request->tujuan_transaksi,
                 'kuantitas' => $request->kuantitas,
@@ -131,21 +131,23 @@ class PengeluaranController extends Controller
 
     public function jumlahPengeluaran()
     {
-        $sumOfJumlahPengeluaran = Pengeluaran::where('user_id', auth()->id())->sum(\DB::raw('kuantitas * harga_peritem'));
+        $sumOfJumlahPengeluaran = Pengeluaran::where('user_id', auth()->id())
+            ->sum(\DB::raw('CAST(kuantitas AS NUMERIC) * CAST(harga_peritem AS NUMERIC)'));
+
         $formattedPengeluaran = 'Rp' . number_format($sumOfJumlahPengeluaran, 2, ',', '.');
 
-        return $formattedPengeluaran; 
-    }     
+        return $formattedPengeluaran;
+    }
+    
 
     public function totalKategoriPengeluaran()
     {
-        $categoryTotals = Pengeluaran::select('nama_kategori', \DB::raw('SUM(kuantitas * harga_peritem) as total'))
+        $categoryTotals = Pengeluaran::select('nama_kategori', \DB::raw('SUM(CAST(kuantitas AS NUMERIC) * CAST(harga_peritem AS NUMERIC)) as total'))
             ->where('user_id', auth()->id())
             ->groupBy('nama_kategori')
             ->get();
 
-        $formattedData = json_encode($categoryTotals);
+        return $categoryTotals;
+    }
 
-        return $formattedData;
-    }    
 }
