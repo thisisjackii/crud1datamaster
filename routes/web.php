@@ -56,8 +56,8 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         });
 
             Route::controller(PemasukanImportController::class)
-            ->prefix('import')
-            ->as('import.')
+            ->prefix('importpemasukan')
+            ->as('importpemasukan.')
             ->group(function () {
                 Route::post('/','index')->name('index');
             });
@@ -84,8 +84,8 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         });
 
         Route::controller(PengeluaranImportController::class)
-        ->prefix('import')
-        ->as('import.')
+        ->prefix('importpengeluaran')
+        ->as('importpengeluaran.')
         ->group(function () {
             Route::post('/','index')->name('index');
         });
