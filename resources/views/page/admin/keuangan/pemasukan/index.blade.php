@@ -48,7 +48,7 @@
                 <input type="submit" value="Cetak Word">
             </form>
 
-            <form method="post" action="{{route('import.index')}}" enctype="multipart/form-data">
+            <form method="post" action="{{route('importpemasukan.index')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="file">Upload Excel File:</label>
