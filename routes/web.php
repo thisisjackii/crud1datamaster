@@ -42,17 +42,6 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         Route::post('update', [HomeController::class, 'updateprofile'])->name('profile.update');
     });
 
-    Route::controller(AkunController::class)
-        ->prefix('akun')
-        ->as('akun.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('showdata', 'dataTable')->name('dataTable');
-            Route::match(['get','post'],'tambah', 'tambahAkun')->name('add');
-            Route::match(['get','post'],'{id}/ubah', 'ubahAkun')->name('edit');
-            Route::delete('{id}/hapus', 'hapusAkun')->name('delete');
-        });
-
     Route::controller(PemasukanController::class)
         ->prefix('pemasukan')
         ->as('pemasukan.')

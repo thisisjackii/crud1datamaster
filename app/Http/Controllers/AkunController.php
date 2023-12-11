@@ -69,7 +69,8 @@ class AkunController extends Controller
                 'email' => 'required|string|min:3|email|unique:users,email',
                 'password' => 'required|min:8|confirmed',
                 'password_confirmation' => 'required|min:8',
-                'user_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024'
+                'user_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024',
+                'is_admin' => 'boolean',
             ]);
             $img = null;
             if ($request->file('user_image')) {
@@ -81,7 +82,8 @@ class AkunController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'user_image' => $img
+                'user_image' => $img,
+                'is_admin' => $request->has('is_admin'),
             ]);
             return redirect()->route('akun.add')->with('status', 'Data telah tersimpan di database');
         }
@@ -98,7 +100,8 @@ class AkunController extends Controller
                 'email' => 'required|string|min:3|email|unique:users,email,'.$usr->id,
                 'password' => 'required|min:8|confirmed',
                 'password_confirmation' => 'required|min:8',
-                'user_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024'
+                'user_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024',
+                'is_admin' => 'boolean',
             ]);
             $img = $usr->user_image;
             if ($request->file('user_image')) {
@@ -114,7 +117,8 @@ class AkunController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'user_image' => $img
+                'user_image' => $img,
+                'is_admin' => $request->has('is_admin'),
             ]);
             return redirect()->route('akun.edit',['id' => $usr->id ])->with('status', 'Data telah tersimpan di database');
         }

@@ -82,6 +82,14 @@
                             </span>
                             @enderror
                         </div>
+
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember" name="is_admin" {{ old('is_admin') ? 'checked' : '' }} value='1'>
+                            <label for="remember">
+                                Admin
+                            </label>
+                        </div>                
+
                         <div class="form-group">
                             <label for="inputFoto">Foto Profil</label>
                             <div class="row">

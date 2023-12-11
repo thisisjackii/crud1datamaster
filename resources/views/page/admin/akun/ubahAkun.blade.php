@@ -27,7 +27,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
         {{ session('status') }}
-      </div>
+    </div>
     @endif
     <form method="post" enctype="multipart/form-data">
         @csrf
@@ -38,11 +38,7 @@
                         <h3 class="card-title">Informasi Data Diri</h3>
 
                         <div class="card-tools">
-                            <button
-                                type="button"
-                                class="btn btn-tool"
-                                data-card-widget="collapse"
-                                title="Collapse">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                 <i class="fas fa-minus"></i>
                             </button>
                         </div>
@@ -50,15 +46,9 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="inputName">Nama</label>
-                            <input
-                                type="text"
-                                id="inputName"
-                                name="name"
-                                class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Masukkan Nama"
-                                value="{{ $usr->name }}"
-                                required="required"
-                                autocomplete="name">
+                            <input type="text" id="inputName" name="name"
+                                class="form-control @error('name') is-invalid @enderror" placeholder="Masukkan Nama"
+                                value="{{ $usr->name }}" required="required" autocomplete="name">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -67,45 +57,36 @@
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Email</label>
-                            <input
-                                type="email"
-                                id="inputEmail"
-                                name="email"
-                                class="form-control @error('email') is-invalid @enderror"
-                                placeholder="Masukkan Email"
-                                value="{{ $usr->email }}"
-                                required="required"
-                                autocomplete="email">
+                            <input type="email" id="inputEmail" name="email"
+                                class="form-control @error('email') is-invalid @enderror" placeholder="Masukkan Email"
+                                value="{{ $usr->email }}" required="required" autocomplete="email">
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
+
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember" name="is_admin" {{ $usr->is_admin ? 'checked' : '' }}  value='1'>
+                            <label for="remember">
+                                admin
+                            </label>
+                        </div>
+
                         <div class="form-group">
                             <label for="inputFoto">Foto Profil</label>
                             <div class="row">
                                 <div class="col-md-4">
                                     @if ($usr->user_image)
-                                    <img
-                                        class="elevation-3"
-                                        id="prevImg"
-                                        src="{{ $usr->user_image }}"
-                                        width="150px"/>
+                                    <img class="elevation-3" id="prevImg" src="{{ $usr->user_image }}" width="150px" />
                                     @else
-                                    <img
-                                        class="elevation-3"
-                                        id="prevImg"
-                                        src="{{ asset('vendor/adminlte3/img/user2-160x160.jpg') }}"
-                                        width="150px"/>
+                                    <img class="elevation-3" id="prevImg"
+                                        src="{{ asset('vendor/adminlte3/img/user2-160x160.jpg') }}" width="150px" />
                                     @endif
                                 </div>
                                 <div class="col-md-8">
-                                    <input
-                                        type="file"
-                                        id="inputFoto"
-                                        name="user_image"
-                                        accept="image/*"
+                                    <input type="file" id="inputFoto" name="user_image" accept="image/*"
                                         class="form-control @error('user_image') is-invalid @enderror"
                                         placeholder="Upload foto profil">
                                 </div>
@@ -128,11 +109,7 @@
                         <h3 class="card-title">Password</h3>
 
                         <div class="card-tools">
-                            <button
-                                type="button"
-                                class="btn btn-tool"
-                                data-card-widget="collapse"
-                                title="Collapse">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                 <i class="fas fa-minus"></i>
                             </button>
                         </div>
@@ -140,14 +117,9 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input
-                                id="password"
-                                type="password"
-                                placeholder="Kata Sandi"
-                                class="form-control @error('password') is-invalid @enderror"
-                                name="password"
-                                required="required"
-                                autocomplete="new-password">
+                            <input id="password" type="password" placeholder="Kata Sandi"
+                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                required="required" autocomplete="new-password">
                             @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -156,13 +128,8 @@
                         </div>
                         <div class="form-group">
                             <label for="password-confirm">Konfirmasi Password</label>
-                            <input
-                                placeholder="Ketik ulang kata sandi"
-                                id="password-confirm"
-                                type="password"
-                                class="form-control"
-                                name="password_confirmation"
-                                required="required"
+                            <input placeholder="Ketik ulang kata sandi" id="password-confirm" type="password"
+                                class="form-control" name="password_confirmation" required="required"
                                 autocomplete="new-password">
                         </div>
                     </div>
