@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pinjaman;
+use App\Exports\pinjamanExport;
+use App\Imports\pinjamanImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -119,4 +122,16 @@ class PinjamanController extends Controller
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
     }
+
+    public function exportPdf() 
+    {
+        $user_id = auth()->id();
+        return (new PinjamanExport)->forUserId($user_id)->download('pinjaman.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function export() 
+    {
+        $user_id = auth()->id();
+        return (new PinjamanExport)->forUserId($user_id)->download('pinjaman.xlsx');
+    }  
 }
