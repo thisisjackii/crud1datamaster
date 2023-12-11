@@ -15,6 +15,12 @@ class PengeluaranImport implements ToModel, WithCustomCsvSettings, WithHeadingRo
      *
      * @return Pengeluaran|null
      */
+    protected $userId;
+
+    public function __construct($userId)
+    {
+        $this->userId = $userId;
+    }
     public function model(array $row)
     {
         return new Pengeluaran([
@@ -26,7 +32,7 @@ class PengeluaranImport implements ToModel, WithCustomCsvSettings, WithHeadingRo
             'harga_peritem' => $row['harga_peritem'],
             'tanggal' => $row['tanggal'],
             'jam' => $row['jam'],
-
+            'user_id' => $this->userId,
         ]);
     }
 
