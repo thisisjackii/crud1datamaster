@@ -53,6 +53,24 @@
             @csrf
                 <input type="submit" value="Cetak Word">
             </form>
+
+            <form method="post" action="{{route('importtransfer.index')}}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file">Upload Excel File:</label>
+                    <input type="file" name="file" id="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-info">Upload</button>
+            </form>
+
+
+            <a href="{{route('pemasukan.export')}}">
+                <button>tset</button>
+            </a>
+
+            <a href="{{route('pemasukan.exportPdf')}}">
+                <button>Save PDF</button>
+            </a>
                 <table
                     id="previewTransfer"
                     class="table table-striped table-bordered display"

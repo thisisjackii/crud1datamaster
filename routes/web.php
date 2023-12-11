@@ -9,6 +9,8 @@ use App\Http\Controllers\PengeluaranReportController;
 use App\Http\Controllers\HutangController;
 use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
+use App\Http\Controllers\TransferImportController;
+use App\Http\Controllers\TransferReportController;
 use App\Http\Controllers\PengeluaranImportController;
 use App\Http\Controllers\PinjamanImportController;
 use App\Http\Controllers\PinjamanReportController;
@@ -129,7 +131,7 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
               Route::post('/','index')->name('index');
         });
 
-        Route::controller(PemasukanReportController::class)
+        Route::controller(PinjamanReportController::class)
             ->prefix('report')
             ->as('report.')
             ->group(function () {
@@ -146,6 +148,12 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         Route::match(['get','post'],'{id}/ubah', 'ubahTransfer')->name('edit');
         Route::delete('{id}/hapus', 'hapusTransfer')->name('delete');
     });        
+        Route::controller(TransferImportController::class)
+        ->prefix('importtransfer')
+        ->as('importtransfer.')
+        ->group(function () {
+              Route::post('/','index')->name('index');
+        });
 });
 
 Route::group(['prefix' => 'dashboard/admin'], function () {
