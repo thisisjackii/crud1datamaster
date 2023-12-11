@@ -29,6 +29,7 @@ class AkunSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt('password'),
                 'user_image' => $filename,
+                'is_admin' => false,
             ]);
         }
     }
