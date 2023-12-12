@@ -229,7 +229,7 @@
   console.log('Original data:', data);
 
   var labels = data.map(function (item) {
-    return item.nama_kategori;
+    return item.tujuan_transfer;
   });
 
   console.log('Labels:', labels);

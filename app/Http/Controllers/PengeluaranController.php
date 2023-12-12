@@ -147,7 +147,9 @@ class PengeluaranController extends Controller
             ->groupBy('nama_kategori')
             ->get();
 
-        return $categoryTotals;
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
     }
 
 }

@@ -144,6 +144,8 @@ class TransferController extends Controller
             ->groupBy('tujuan_transfer')
             ->get();
 
-        return $categoryTotals;
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
     }
 }
