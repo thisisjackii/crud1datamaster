@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hutang;
+use App\Exports\HutangExport;
+use App\Imports\HutangImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -68,7 +71,7 @@ class HutangController extends Controller
             ]);
 
             Hutang::create([
-                'rekening' => $request->rekening,
+                'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_hutang' => $request->jumlah_hutang,
                 'nama_pemberi_hutang' => $request->nama_pemberi_hutang,
                 'catatan_hutang' => $request->catatan_hutang,
@@ -104,7 +107,7 @@ class HutangController extends Controller
             ]);
 
             $hutang->update([
-                'rekening' => $request->rekening,
+                'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_hutang' => $request->jumlah_hutang,
                 'nama_pemberi_hutang' => $request->nama_pemberi_hutang,
                 'catatan_hutang' => $request->catatan_hutang,
@@ -132,4 +135,16 @@ class HutangController extends Controller
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
     }
+
+    public function exportPdf() 
+    {
+        $user_id = auth()->id();
+        return (new HutangExport)->forUserId($user_id)->download('hutang.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function export() 
+    {
+        $user_id = auth()->id();
+        return (new HutangExport)->forUserId($user_id)->download('hutang.xlsx');
+    }  
 }

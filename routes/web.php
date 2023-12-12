@@ -7,6 +7,8 @@ use App\Http\Controllers\PemasukanReportController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PengeluaranReportController;
 use App\Http\Controllers\HutangController;
+use App\Http\Controllers\HutangImportController;
+use App\Http\Controllers\HutangReportController;
 use App\Http\Controllers\TransferController;
 use App\Models\TransferSaldo;
 use App\Http\Controllers\TransferImportController;
@@ -109,7 +111,23 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
             Route::match(['get', 'post'], 'tambah', 'tambahHutang')->name('add');
             Route::match(['get', 'post'], '{id}/ubah', 'ubahHutang')->name('edit');
             Route::delete('{id}/hapus', 'hapusHutang')->name('delete');
+            Route::get('hutang/export', 'export')->name('export');
+            Route::get('hutang/generate', 'exportPdf')->name('exportPdf');;
         });
+
+        Route::controller(HutangImportController::class)
+            ->prefix('importhutang')
+            ->as('importhutang.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
+
+        Route::controller(HutangReportController::class)
+            ->prefix('report')
+            ->as('report.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
 
     Route::controller(PinjamanController::class)
         ->prefix('pinjaman')
@@ -125,11 +143,11 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         });
 
         Route::controller(PinjamanImportController::class)
-        ->prefix('import')
-        ->as('import.')
-        ->group(function () {
-              Route::post('/','index')->name('index');
-        });
+            ->prefix('import')
+            ->as('import.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
 
         Route::controller(PinjamanReportController::class)
             ->prefix('report')
