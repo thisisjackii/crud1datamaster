@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                    <div class="form-group">
+                        <div class="form-group">
                             <label for="Rekening">Rekening</label>
                             <select name="rekening" id="Rekening"
                                 class="form-control @error('rekening') is-invalid @enderror">

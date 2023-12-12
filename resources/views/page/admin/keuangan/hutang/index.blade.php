@@ -51,6 +51,28 @@
             </div>
         </div>
         <div class="card-body p-0" style="margin: 20px">
+            <form method="post" action="{{route('report.index')}}">
+            @csrf
+                <input type="submit" value="Cetak Word">
+            </form>
+
+            <form method="post" action="{{route('importhutang.index')}}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file">Upload Excel File:</label>
+                    <input type="file" name="file" id="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-info">Upload</button>
+            </form>
+
+
+            <a href="{{route('hutang.export')}}">
+                <button>tset</button>
+            </a>
+
+            <a href="{{route('hutang.exportPdf')}}">
+                <button>Save PDF</button>
+            </a>
             <table
                 id="previewHutang"
                 class="table table-striped table-bordered display"
