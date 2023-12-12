@@ -120,8 +120,8 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
             Route::match(['get', 'post'], 'tambah', 'tambahPinjaman')->name('add');
             Route::match(['get', 'post'], '{id}/ubah', 'ubahPinjaman')->name('edit');
             Route::delete('{id}/hapus', 'hapusPinjaman')->name('delete');
-            Route::get('pemasukan/export', 'export')->name('export');
-            Route::get('pemasukan/generate', 'exportPdf')->name('exportPdf');;
+            Route::get('pinjaman/export', 'export')->name('export');
+            Route::get('pinjaman/generate', 'exportPdf')->name('exportPdf');;
         });
 
         Route::controller(PinjamanImportController::class)
@@ -147,6 +147,8 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         Route::match(['get','post'],'tambah', 'tambahTransfer')->name('add');
         Route::match(['get','post'],'{id}/ubah', 'ubahTransfer')->name('edit');
         Route::delete('{id}/hapus', 'hapusTransfer')->name('delete');
+        Route::get('transfer/export', 'export')->name('export');
+        Route::get('transfer/generate', 'exportPdf')->name('exportPdf');;
     });        
         Route::controller(TransferImportController::class)
         ->prefix('importtransfer')
@@ -154,6 +156,13 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => 'is_admin'], functi
         ->group(function () {
               Route::post('/','index')->name('index');
         });
+
+        Route::controller(TransferReportController::class)
+            ->prefix('report')
+            ->as('report.')
+            ->group(function () {
+                Route::post('/','index')->name('index');
+            });
 });
 
 Route::group(['prefix' => 'dashboard/admin'], function () {

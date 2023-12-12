@@ -64,11 +64,11 @@
             </form>
 
 
-            <a href="{{route('pemasukan.export')}}">
+            <a href="{{route('transfer_saldo.export')}}">
                 <button>tset</button>
             </a>
 
-            <a href="{{route('pemasukan.exportPdf')}}">
+            <a href="{{route('transfer_saldo.exportPdf')}}">
                 <button>Save PDF</button>
             </a>
                 <table

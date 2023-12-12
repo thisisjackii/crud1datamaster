@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\TransferSaldo;
 use Illuminate\Http\Request;
+use App\Exports\TransferExport;
+use App\Imports\TransferImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -109,4 +112,18 @@ class TransferController extends Controller
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
     }
+
+    public function exportPdf() 
+    {
+        $user_id = auth()->id();
+        // return Excel::download(new PengeluaranExport, 'pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        return (new TransferExport)->forUserId($user_id)->download('transfer.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function export() 
+    {
+        $user_id = auth()->id();
+    
+        return (new TransferExport)->forUserId($user_id)->download('transfer.xlsx');
+    } 
 }
