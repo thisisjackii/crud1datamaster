@@ -136,7 +136,7 @@ class PengeluaranController extends Controller
 
         $formattedPengeluaran = 'Rp' . number_format($sumOfJumlahPengeluaran, 2, ',', '.');
 
-        return $formattedPengeluaran;
+        return $sumOfJumlahPengeluaran;
     }
     
 

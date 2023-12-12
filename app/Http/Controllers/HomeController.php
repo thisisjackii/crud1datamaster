@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\HutangController;
+use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\TransferController;
 
 class HomeController extends Controller
 {
@@ -28,14 +31,27 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(PemasukanController $pemasukanController, PengeluaranController $pengeluaranController)
+    public function index(PemasukanController $pemasukanController, PengeluaranController $pengeluaranController, HutangController $hutangController, PinjamanController $pinjamanController, TransferController $transferController)
     {
         $sumOfJumlahPemasukan = $pemasukanController->jumlahPemasukan();
         $sumOfJumlahPengeluaran = $pengeluaranController->jumlahPengeluaran();
         $categoryTotalsPemasukan = $pemasukanController->totalKategoriPemasukan();
         $categoryTotalsPengeluaran = $pengeluaranController->totalKategoriPengeluaran();
+        $categoryTotalsTransfer = $transferController->totalKategoriTransfer();
 
-        return view('home', compact('sumOfJumlahPemasukan','sumOfJumlahPengeluaran','categoryTotalsPemasukan','categoryTotalsPengeluaran'));
+        $sumOfBelumLunasValueHutang = $hutangController->getBelumLunasValue();
+        $sumOfBelumLunasValuePinjaman = $pinjamanController->getBelumLunasValue();
+        $sumOfSudahLunasValueHutang = $hutangController->getSudahLunasValue();
+        $sumOfSudahLunasValuePinjaman = $pinjamanController->getSudahLunasValue();
+        $sumOfJumlahTransfer = $transferController->jumlahTransfer();
+
+        $totalAkhirPengeluaran = $sumOfJumlahPengeluaran + $sumOfSudahLunasValueHutang + $sumOfBelumLunasValuePinjaman + $sumOfJumlahTransfer;
+        $totalAkhirPemasukan = $sumOfJumlahPemasukan + $sumOfBelumLunasValueHutang + $sumOfSudahLunasValuePinjaman;
+ 
+        $formattedAkhirPengeluaran = 'Rp' . number_format($totalAkhirPengeluaran, 2, ',', '.');
+        $formattedAkhirPemasukan = 'Rp' . number_format($totalAkhirPemasukan, 2, ',', '.'); 
+
+        return view('home', compact('formattedAkhirPengeluaran','formattedAkhirPemasukan','categoryTotalsPemasukan','categoryTotalsPengeluaran', 'categoryTotalsTransfer'));
     }
 
     public function profile()

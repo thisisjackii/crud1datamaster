@@ -29,7 +29,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Pemasukan</span>
-            <span class="info-box-number">{{ $sumOfJumlahPemasukan }}</span>
+            <span class="info-box-number">{{ $formattedAkhirPemasukan }}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -42,7 +42,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Pengeluaran</span>
-            <span class="info-box-number">{{ $sumOfJumlahPengeluaran }}</span>
+            <span class="info-box-number">{{ $formattedAkhirPengeluaran }}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -99,9 +99,31 @@
         <!-- /.card -->
       </div>
 
+      <div class="col-12">
+        <!-- DONUT CHART -->
+        <div class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Transfer Saldo</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="myChartTransfer" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+
+
     </div>
-
-
   </div>
 </section>
 <script src="{{ asset('vendor/adminlte3/plugins/chart.js/Chart.min.js') }}"></script>
@@ -199,4 +221,50 @@
     });
 </script>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var ctx = document.getElementById('myChartTransfer').getContext('2d');
+    var data = {!! $categoryTotalsTransfer !!};
+
+  console.log('Original data:', data);
+
+  var labels = data.map(function (item) {
+    return item.nama_kategori;
+  });
+
+  console.log('Labels:', labels);
+
+  var values = data.map(function (item) {
+    return item.total;
+  });
+
+  var randomColors = Array.from({ length: data.length }, () => getRandomColor());
+
+  console.log('Values:', values);
+
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: randomColors,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+    });
+</script>
 @endsection

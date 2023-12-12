@@ -126,7 +126,7 @@ class PemasukanController extends Controller
         $sumOfJumlahPemasukan = Pemasukan::where('user_id', auth()->id())->sum('jumlah_pemasukan');
         $formattedPemasukan = 'Rp' . number_format($sumOfJumlahPemasukan, 2, ',', '.');
 
-        return $formattedPemasukan;
+        return $sumOfJumlahPemasukan;
     }
     public function totalKategoriPemasukan()
     {
