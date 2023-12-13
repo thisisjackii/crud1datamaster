@@ -49,11 +49,13 @@ class HomeController extends Controller
 
         $totalAkhirPengeluaran = $sumOfJumlahPengeluaran + $sumOfSudahLunasValueHutang + $sumOfBelumLunasValuePinjaman + $sumOfJumlahTransfer;
         $totalAkhirPemasukan = $sumOfJumlahPemasukan + $sumOfBelumLunasValueHutang + $sumOfSudahLunasValuePinjaman;
- 
+        $totalAll = $totalAkhirPemasukan - $totalAkhirPengeluaran; 
+
         $formattedAkhirPengeluaran = 'Rp' . number_format($totalAkhirPengeluaran, 2, ',', '.');
         $formattedAkhirPemasukan = 'Rp' . number_format($totalAkhirPemasukan, 2, ',', '.'); 
+        $formattedTotalAll = 'Rp' . number_format($totalAll, 2, ',', '.');
 
-        return view('home', compact('formattedAkhirPengeluaran','formattedAkhirPemasukan','categoryTotalsPemasukan','categoryTotalsPengeluaran', 'categoryTotalsTransfer', 'categoryTotalsHutang', 'categoryTotalsPinjaman'));
+        return view('home', compact('formattedAkhirPengeluaran','formattedAkhirPemasukan','categoryTotalsPemasukan','categoryTotalsPengeluaran', 'categoryTotalsTransfer', 'categoryTotalsHutang', 'categoryTotalsPinjaman','formattedTotalAll'));
     }
 
     public function profile()

@@ -23,7 +23,7 @@
 
     <h5 class="mb-2">Info Box</h5>
     <div class="row">
-      <div class="col-md-6 col-sm-6 col-12">
+      <div class="col-md-4 col-sm-4 col-12">
         <div class="info-box">
           <span class="info-box-icon bg-info"><i class="fas fa-wallet"></i></span>
 
@@ -36,13 +36,26 @@
         <!-- /.info-box -->
       </div>
       <!-- /.col -->
-      <div class="col-md-6 col-sm-6 col-12">
+      <div class="col-md-4 col-sm-4 col-12">
         <div class="info-box">
           <span class="info-box-icon bg-success"><i class="fas fa-shopping-cart"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Pengeluaran</span>
-            <span class="info-box-number">{{ $formattedAkhirPengeluaran }}</span>
+            <span class="info-box-number text-red">{{ $formattedAkhirPengeluaran }}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-4 col-sm-4 col-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-danger"><i class="fas fa-plus"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Total</span>
+            <span class="info-box-number">{{ $formattedTotalAll }}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
