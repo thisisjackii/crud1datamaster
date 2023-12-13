@@ -76,8 +76,6 @@
                         </div>
                     </form>
                 </div>
-
-
             </div>
 
             <table id="previewHutang" class="table table-striped table-bordered display" style="width:100%">

@@ -25,7 +25,7 @@
         ],
         [
             'text' => 'Kelola Pemasukan',
-            'icon' => 'fas fa-users',
+            'icon' => 'fas fa-wallet',
             'is_multi' => true,
             'href' => [
                 [
@@ -42,7 +42,7 @@
         ],
         [
             'text' => 'Kelola Pengeluaran',
-            'icon' => 'fas fa-users',
+            'icon' => 'fas fa-shopping-cart',
             'is_multi' => true,
             'href' => [
                 [
@@ -59,7 +59,7 @@
         ],
         [
             'text' => 'Kelola Hutang',
-            'icon' => 'fas fa-users',
+            'icon' => 'fas fa-credit-card',
             'is_multi' => true,
             'href' => [
                 [
@@ -76,7 +76,7 @@
         ],
         [
             'text' => 'Kelola Pinjaman',
-            'icon' => 'fas fa-users',
+            'icon' => 'fas fa-money-bill',
             'is_multi' => true,
             'href' => [
                 [
@@ -93,7 +93,7 @@
         ],
         [
             'text' => 'Kelola Transfer Saldo',
-            'icon' => 'fas fa-users',
+            'icon' => 'fas fa-share',
             'is_multi' => true,
             'href' => [
                 [
@@ -115,9 +115,13 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{ asset('vendor/adminlte3/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+        <img src="{{ asset('vendor/adminlte3/img/SavePenseLogo.svg') }}" alt="SavePense Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+            @if (auth()->user()->is_admin == 0)
+                <span class="brand-text font-weight-light">SavePense</span>    
+            @else
+                <span class="brand-text font-weight-light">SavePense<b>Admin</b></span>
+            @endif
     </a>
 
     <!-- Sidebar -->

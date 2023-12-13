@@ -25,7 +25,7 @@
     <div class="row">
       <div class="col-md-6 col-sm-6 col-12">
         <div class="info-box">
-          <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+          <span class="info-box-icon bg-info"><i class="fas fa-wallet"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Pemasukan</span>
@@ -38,7 +38,7 @@
       <!-- /.col -->
       <div class="col-md-6 col-sm-6 col-12">
         <div class="info-box">
-          <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
+          <span class="info-box-icon bg-success"><i class="fas fa-shopping-cart"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Pengeluaran</span>
@@ -55,7 +55,7 @@
 
       <div class="col-md-6 col-sm-6 col-12">
         <!-- DONUT CHART -->
-        <div class="card card-danger">
+        <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Pemasukan</h3>
 
@@ -78,7 +78,7 @@
 
       <div class="col-md-6 col-sm-6 col-12">
         <!-- DONUT CHART -->
-        <div class="card card-danger">
+        <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Pengeluaran</h3>
 
@@ -101,7 +101,7 @@
 
       <div class="col-12">
         <!-- DONUT CHART -->
-        <div class="card card-danger">
+        <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Transfer Saldo</h3>
 
@@ -122,7 +122,51 @@
         <!-- /.card -->
       </div>
 
+      <div class="col-md-6 col-sm-6 col-12">
+        <!-- DONUT CHART -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Hutang</h3>
 
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="myChartHutang" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+
+      <div class="col-md-6 col-sm-6 col-12">
+        <!-- DONUT CHART -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Pinjaman</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="myChartPinjaman" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
     </div>
   </div>
 </section>
@@ -230,6 +274,100 @@
 
   var labels = data.map(function (item) {
     return item.tujuan_transfer;
+  });
+
+  console.log('Labels:', labels);
+
+  var values = data.map(function (item) {
+    return item.total;
+  });
+
+  var randomColors = Array.from({ length: data.length }, () => getRandomColor());
+
+  console.log('Values:', values);
+
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: randomColors,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+    });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var ctx = document.getElementById('myChartHutang').getContext('2d');
+    var data = {!! $categoryTotalsHutang !!};
+
+  console.log('Original data:', data);
+
+  var labels = data.map(function (item) {
+    return item.status;
+  });
+
+  console.log('Labels:', labels);
+
+  var values = data.map(function (item) {
+    return item.total;
+  });
+
+  var randomColors = Array.from({ length: data.length }, () => getRandomColor());
+
+  console.log('Values:', values);
+
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: randomColors,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  });
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+    });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var ctx = document.getElementById('myChartPinjaman').getContext('2d');
+    var data = {!! $categoryTotalsPinjaman !!};
+
+  console.log('Original data:', data);
+
+  var labels = data.map(function (item) {
+    return item.status;
   });
 
   console.log('Labels:', labels);

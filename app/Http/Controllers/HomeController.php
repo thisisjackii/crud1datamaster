@@ -38,6 +38,8 @@ class HomeController extends Controller
         $categoryTotalsPemasukan = $pemasukanController->totalKategoriPemasukan();
         $categoryTotalsPengeluaran = $pengeluaranController->totalKategoriPengeluaran();
         $categoryTotalsTransfer = $transferController->totalKategoriTransfer();
+        $categoryTotalsHutang = $hutangController->totalKategoriHutang();
+        $categoryTotalsPinjaman = $pinjamanController->totalKategoriPinjaman();
 
         $sumOfBelumLunasValueHutang = $hutangController->getBelumLunasValue();
         $sumOfBelumLunasValuePinjaman = $pinjamanController->getBelumLunasValue();
@@ -51,7 +53,7 @@ class HomeController extends Controller
         $formattedAkhirPengeluaran = 'Rp' . number_format($totalAkhirPengeluaran, 2, ',', '.');
         $formattedAkhirPemasukan = 'Rp' . number_format($totalAkhirPemasukan, 2, ',', '.'); 
 
-        return view('home', compact('formattedAkhirPengeluaran','formattedAkhirPemasukan','categoryTotalsPemasukan','categoryTotalsPengeluaran', 'categoryTotalsTransfer'));
+        return view('home', compact('formattedAkhirPengeluaran','formattedAkhirPemasukan','categoryTotalsPemasukan','categoryTotalsPengeluaran', 'categoryTotalsTransfer', 'categoryTotalsHutang', 'categoryTotalsPinjaman'));
     }
 
     public function profile()

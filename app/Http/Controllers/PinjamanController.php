@@ -151,4 +151,16 @@ class PinjamanController extends Controller
         return $result;
     }   
 
+    public function totalKategoriPinjaman()
+    {
+        $categoryTotals = Pinjaman::select('status', \DB::raw('SUM(CAST(jumlah_pinjaman AS NUMERIC)) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('status')
+            ->get();
+
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
+    }    
+
 }
