@@ -11,11 +11,15 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
+use App\Http\Controllers\RiwayatController;
+
 class TransferController extends Controller
 {
-    public function __construct()
+    private $riwayatController;
+    public function __construct(RiwayatController $riwayatController)
     {
         $this->middleware('auth');
+        $this->riwayatController = $riwayatController;
     }
     public function index()
     {
@@ -56,7 +60,7 @@ class TransferController extends Controller
                 'biaya_admin' => 'required|numeric',
             ]);
 
-            TransferSaldo::create([
+            $transfer = TransferSaldo::create([
                 'sumber_rekening' => $request->sumber_rekening === 'MISC' ? $request->custom_notes : $request->sumber_rekening,
                 'tujuan_transfer' => $request->tujuan_transfer === 'MISC' ? $request->custom_notes2 : $request->tujuan_transfer,
                 'jumlah_transfer' => $request->jumlah_transfer,
@@ -65,6 +69,9 @@ class TransferController extends Controller
                 'biaya_admin' => $request->biaya_admin,
                 'user_id' => auth()->id(),
             ]);
+
+            // Create Riwayat entry
+            $this->riwayatController->tambahRiwayat('TSF', $transfer->id, $transfer->tanggal, $transfer->jam, $transfer->user_id);
 
             return redirect()->route('transfer_saldo.add')->with('status', 'Data telah tersimpan di database');
         }
@@ -113,17 +120,17 @@ class TransferController extends Controller
         ]);
     }
 
-    public function exportPdf() 
+    public function exportPdf()
     {
         $user_id = auth()->id();
         // return Excel::download(new PengeluaranExport, 'pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
         return (new TransferExport)->forUserId($user_id)->download('transfer.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function export() 
+    public function export()
     {
         $user_id = auth()->id();
-    
+
         return (new TransferExport)->forUserId($user_id)->download('transfer.xlsx');
-    } 
+    }
 }

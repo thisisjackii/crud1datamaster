@@ -9,11 +9,15 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
+use App\Http\Controllers\RiwayatController;
+
 class HutangController extends Controller
 {
-    public function __construct()
+    private $riwayatController;
+    public function __construct(RiwayatController $riwayatController)
     {
         $this->middleware('auth');
+        $this->riwayatController = $riwayatController;
     }
     public function index()
     {
@@ -70,7 +74,7 @@ class HutangController extends Controller
                 'status' => 'required|in:Belum Lunas,Sudah Lunas',
             ]);
 
-            Hutang::create([
+            $hutang = Hutang::create([
                 'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_hutang' => $request->jumlah_hutang,
                 'nama_pemberi_hutang' => $request->nama_pemberi_hutang,
@@ -82,6 +86,9 @@ class HutangController extends Controller
                 'status' => $request->status,
                 'user_id' => auth()->id(),
             ]);
+
+            // Create Riwayat entry
+            $this->riwayatController->tambahRiwayat('HTG', $hutang->id, $hutang->tanggal_hutang, $hutang->jam_hutang, $hutang->user_id);
 
             return redirect()->route('hutang.add')->with('status', 'Data telah tersimpan di database');
         }
@@ -136,15 +143,15 @@ class HutangController extends Controller
         ]);
     }
 
-    public function exportPdf() 
+    public function exportPdf()
     {
         $user_id = auth()->id();
         return (new HutangExport)->forUserId($user_id)->download('hutang.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function export() 
+    public function export()
     {
         $user_id = auth()->id();
         return (new HutangExport)->forUserId($user_id)->download('hutang.xlsx');
-    }  
+    }
 }

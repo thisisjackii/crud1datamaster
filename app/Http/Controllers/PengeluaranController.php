@@ -9,11 +9,15 @@ use App\Exports\PengeluaranExport;
 use App\Imports\PengeluaranImport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Http\Controllers\RiwayatController;
+
 class PengeluaranController extends Controller
 {
-    public function __construct()
+    private $riwayatController;
+    public function __construct(RiwayatController $riwayatController)
     {
         $this->middleware('auth');
+        $this->riwayatController = $riwayatController;
     }
     public function index()
     {
@@ -55,7 +59,7 @@ class PengeluaranController extends Controller
                 'jam' => 'required',
             ]);
 
-            Pengeluaran::create([
+            $pengeluaran = Pengeluaran::create([
                 'nama_kategori' => $request->nama_kategori === 'Lainnya' ? $request->custom_notes : $request->nama_kategori,
                 'nama_pengeluaran' => $request->nama_pengeluaran,
                 'tujuan_transaksi' => $request->tujuan_transaksi,
@@ -65,6 +69,9 @@ class PengeluaranController extends Controller
                 'jam' => $request->jam,
                 'user_id' => auth()->id(),
             ]);
+
+            // Create Riwayat entry
+            $this->riwayatController->tambahRiwayat('PNG', $pengeluaran->id, $pengeluaran->tanggal, $pengeluaran->jam, $pengeluaran->user_id);
 
             return redirect()->route('pengeluaran.add')->with('status', 'Data telah tersimpan di database');
         }
@@ -115,19 +122,19 @@ class PengeluaranController extends Controller
         ]);
     }
 
-    public function exportPdf() 
+    public function exportPdf()
     {
         $user_id = auth()->id();
         // return Excel::download(new PengeluaranExport, 'pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
         return (new PengeluaranExport)->forUserId($user_id)->download('pengeluaran.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function export() 
+    public function export()
     {
         $user_id = auth()->id();
-    
+
         return (new PengeluaranExport)->forUserId($user_id)->download('pengeluaran.xlsx');
-    }    
+    }
 
     public function jumlahPengeluaran()
     {
@@ -138,7 +145,7 @@ class PengeluaranController extends Controller
 
         return $formattedPengeluaran;
     }
-    
+
 
     public function totalKategoriPengeluaran()
     {
@@ -149,5 +156,4 @@ class PengeluaranController extends Controller
 
         return $categoryTotals;
     }
-
 }

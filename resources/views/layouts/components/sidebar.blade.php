@@ -107,7 +107,13 @@
                     'section_href' => route('transfer_saldo.add'),
                 ],
             ],
-        ],        
+        ],
+        [
+            'text' => 'Riwayat Transaksi',
+            'icon' => 'fas fa-users',
+            'is_multi' => false,
+            'href' => route('riwayat.index')
+        ]
     ];
     $navigation_links = json_decode(json_encode($links));
 @endphp
@@ -230,7 +236,7 @@
                     </ul>
                 </li>
             @endif
-        @endforeach 
+        @endforeach
             </ul>
         </nav>
 

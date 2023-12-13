@@ -9,11 +9,15 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
+use App\Http\Controllers\RiwayatController;
+
 class PemasukanController extends Controller
 {
-    public function __construct()
+    private $riwayatController;
+    public function __construct(RiwayatController $riwayatController)
     {
         $this->middleware('auth');
+        $this->riwayatController = $riwayatController;
     }
     public function index()
     {
@@ -52,7 +56,7 @@ class PemasukanController extends Controller
                 'jam' => 'required',
             ]);
 
-            Pemasukan::create([
+            $pemasukan = Pemasukan::create([
                 'nama_kategori' => $request->nama_kategori === 'Lainnya' ? $request->custom_notes : $request->nama_kategori,
                 'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_pemasukan' => $request->jumlah_pemasukan,
@@ -61,6 +65,9 @@ class PemasukanController extends Controller
                 'jam' => $request->jam,
                 'user_id' => auth()->id(),
             ]);
+
+            // Create Riwayat entry
+            $this->riwayatController->tambahRiwayat('PMS', $pemasukan->id, $pemasukan->tanggal, $pemasukan->jam, $pemasukan->user_id);
 
             return redirect()->route('pemasukan.add')->with('status', 'Data telah tersimpan di database');
         }
@@ -109,17 +116,17 @@ class PemasukanController extends Controller
         ]);
     }
 
-    public function exportPdf() 
+    public function exportPdf()
     {
         $user_id = auth()->id();
         return (new PemasukanExport)->forUserId($user_id)->download('pemasukan.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function export() 
+    public function export()
     {
         $user_id = auth()->id();
         return (new PemasukanExport)->forUserId($user_id)->download('pemasukan.xlsx');
-    }  
+    }
 
     public function jumlahPemasukan()
     {

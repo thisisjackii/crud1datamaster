@@ -9,11 +9,15 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
+use App\Http\Controllers\RiwayatController;
+
 class PinjamanController extends Controller
 {
-    public function __construct()
+    private $riwayatController;
+    public function __construct(RiwayatController $riwayatController)
     {
         $this->middleware('auth');
+        $this->riwayatController = $riwayatController;
     }
     public function index()
     {
@@ -57,7 +61,7 @@ class PinjamanController extends Controller
                 'status' => 'required|in:Belum Lunas,Sudah Lunas',
             ]);
 
-            Pinjaman::create([
+            $pinjaman = Pinjaman::create([
                 'rekening' => $request->rekening === 'Lainnya' ? $request->custom_notes2 : $request->rekening,
                 'jumlah_pinjaman' => $request->jumlah_pinjaman,
                 'nama_diberi_pinjaman' => $request->nama_diberi_pinjaman,
@@ -69,6 +73,9 @@ class PinjamanController extends Controller
                 'status' => $request->status,
                 'user_id' => auth()->id(),
             ]);
+
+            // Create Riwayat entry
+            $this->riwayatController->tambahRiwayat('PNJ', $pinjaman->id, $pinjaman->tanggal_pinjaman, $pinjaman->jam_pinjaman, $pinjaman->user_id);
 
             return redirect()->route('pinjaman.add')->with('status', 'Data telah tersimpan di database');
         }
@@ -123,15 +130,15 @@ class PinjamanController extends Controller
         ]);
     }
 
-    public function exportPdf() 
+    public function exportPdf()
     {
         $user_id = auth()->id();
         return (new PinjamanExport)->forUserId($user_id)->download('pinjaman.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function export() 
+    public function export()
     {
         $user_id = auth()->id();
         return (new PinjamanExport)->forUserId($user_id)->download('pinjaman.xlsx');
-    }  
+    }
 }
