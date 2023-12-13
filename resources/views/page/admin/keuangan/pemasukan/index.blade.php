@@ -24,62 +24,73 @@
     </div>
 </section>
 
-    <section class="content">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"></h3>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body p-0" style="margin: 20px">
-
-            <form method="post" action="{{route('report.index')}}">
-            @csrf
-                <input type="submit" value="Cetak Word">
-            </form>
-
-            <form method="post" action="{{route('importpemasukan.index')}}" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="file">Upload Excel File:</label>
-                    <input type="file" name="file" id="file" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-info">Upload</button>
-            </form>
-
-
-            <a href="{{route('pemasukan.export')}}">
-                <button>tset</button>
-            </a>
-
-            <a href="{{route('pemasukan.exportPdf')}}">
-                <button>Save PDF</button>
-            </a>
-
-                <table id="previewPemasukan" class="table table-striped table-bordered display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Nama Pemasukan</th>
-                            <th>Pilih Rekening</th>
-                            <th>Jumlah Pemasukan</th>
-                            <th>Catatan Pemasukan</th>
-                            <th>Tanggal</th>
-                            <th>Jam</th>
-                            <th>Opsi</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"></h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         </div>
-    </section>
+        <div class="card-body p-0" style="margin: 20px">
+
+            <div class="d-flex flex-row bd-highlight mb-4">
+                <div class="p-2">
+                    <form method="post" action="{{route('report.index')}}">
+                        @csrf
+                        <input type="submit" value="Cetak Word" class="input-group-text text-bg-primary">
+                    </form>
+                </div>
+
+                <div class="p-2">
+                    <a href="{{route('pemasukan.export')}}">
+                        <button class="input-group-text text-bg-primary">Save Excel</button>
+                    </a>
+                </div>
+
+                <div class="p-2">
+                    <a href="{{route('pemasukan.exportPdf')}}">
+                        <button class="input-group-text text-bg-primary">Save PDF</button>
+                    </a>
+                </div>
+
+                <div class="p-2">
+                    <form method="post" action="{{route('importpemasukan.index')}}" enctype="multipart/form-data"
+                        class="form-inline">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <input type="file" name="file" id="file" class="form-control">
+                        </div>
+                        <div class="form-group mb-2 ml-2">
+                            <button type="submit" class="input-group-text text-bg-primary">Upload CSV</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <table id="previewPemasukan" class="table table-striped table-bordered display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nomor</th>
+                        <th>Nama Pemasukan</th>
+                        <th>Pilih Rekening</th>
+                        <th>Jumlah Pemasukan</th>
+                        <th>Catatan Pemasukan</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Opsi</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</section>
 @endsection
 
 @section('script_footer')
