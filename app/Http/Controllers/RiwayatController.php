@@ -37,7 +37,7 @@ class RiwayatController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = Riwayat::where('user_id', auth()->id())->select('id', 'reference_id', 'tanggal', 'jam');
+            $data = Riwayat::where('user_id', auth()->id())->select('reference_id', 'tanggal', 'jam', 'id');
 
             return DataTables::of($data)
                 ->addColumn('type', function ($row) {
@@ -55,7 +55,6 @@ class RiwayatController extends Controller
                 ->addColumn('time', function ($row) {
                     return $row->jam;
                 })
-                ->rawColumns(['options'])
                 ->make(true);
         }
     }
