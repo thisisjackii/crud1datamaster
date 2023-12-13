@@ -16,12 +16,13 @@ class TransferTableSeeder extends Seeder
     public function run()
     {
         // You can adjust the number of records you want to seed
-        $numberOfRecords = 1000;
+        $numberOfRecords = 2000;
+        $paymentMethods = ['GOPAY', 'SHOPEE PAY', 'OVO'];
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
             DB::table('transfer_saldo')->insert([
-                'sumber_rekening' => rand(100000000, 999999999) . '',
-                'tujuan_transfer' => rand(100000000, 999999999) . '',
+                'sumber_rekening' => $paymentMethods[array_rand($paymentMethods)],
+                'tujuan_transfer' => $paymentMethods[array_rand($paymentMethods)],
                 'jumlah_transfer' => rand(100, 999) * 1000,
                 'tanggal' => now()->toDateString(),
                 'jam' => now()->toTimeString(),
