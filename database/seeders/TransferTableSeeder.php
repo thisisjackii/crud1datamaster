@@ -16,7 +16,7 @@ class TransferTableSeeder extends Seeder
     public function run()
     {
         // You can adjust the number of records you want to seed
-        $numberOfRecords = 10;
+        $numberOfRecords = 1000;
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
             DB::table('transfer_saldo')->insert([
@@ -25,7 +25,7 @@ class TransferTableSeeder extends Seeder
                 'jumlah_transfer' => rand(100, 999) * 1000,
                 'tanggal' => now()->toDateString(),
                 'jam' => now()->toTimeString(),
-                'biaya_admin' => rand(100, 999) * 1000,
+                'biaya_admin' => rand(100, 999) * 10,
                 'user_id' => ($i % 2 == 0) ? 2 : 1, // Replace with the actual user_id
                 'created_at' => now(),
                 'updated_at' => now(),
