@@ -110,7 +110,7 @@
         ],
         [
             'text' => 'Riwayat Transaksi',
-            'icon' => 'fas fa-users',
+            'icon' => 'fas fa-history',
             'is_multi' => false,
             'href' => route('riwayat.index')
         ]
