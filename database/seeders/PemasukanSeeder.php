@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Controllers\RiwayatController;
+
 class PemasukanSeeder extends Seeder
 {
     /**
@@ -13,13 +15,20 @@ class PemasukanSeeder extends Seeder
      *
      * @return void
      */
+    private $riwayatController;
+
+    public function __construct(RiwayatController $riwayatController)
+    {
+        $this->riwayatController = $riwayatController;
+    }
+
     public function run()
     {
         // You can adjust the number of records you want to seed
-        $numberOfRecords = 10;
+        $numberOfRecords = 2000;
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
-            DB::table('pemasukan')->insert([
+            $pemasukan = DB::table('pemasukan')->insertGetId([
                 'nama_kategori' => 'Salary' . ($i + 1),
                 'rekening' => 'Bank Account' . ($i + 1),
                 'jumlah_pemasukan' => rand(100, 999) * 1000,
@@ -30,6 +39,8 @@ class PemasukanSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            $this->riwayatController->tambahRiwayat('PMS', $pemasukan, now()->toDateString(), now()->toTimeString(), ($i % 2 == 0) ? 2 : 1);
         }
     }
 }

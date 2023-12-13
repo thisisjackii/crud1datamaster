@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\RiwayatController;
 
 class PinjamanSeeder extends Seeder
 {
@@ -13,13 +14,20 @@ class PinjamanSeeder extends Seeder
      *
      * @return void
      */
+    private $riwayatController;
+
+    public function __construct(RiwayatController $riwayatController)
+    {
+        $this->riwayatController = $riwayatController;
+    }
+
     public function run()
     {
         // You can adjust the number of records you want to seed
-        $numberOfRecords = 10;
+        $numberOfRecords = 2000;
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
-            DB::table('pinjaman')->insert([
+            $pinjaman = DB::table('pinjaman')->insert([
                 'rekening' => rand(100000000, 999999999) . '', // Concatenate with an empty string
                 'jumlah_pinjaman' => rand(100, 999) * 1000,
                 'nama_diberi_pinjaman' => 'Lender ' . ($i + 1),
@@ -33,6 +41,8 @@ class PinjamanSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            $this->riwayatController->tambahRiwayat('PNJ', $pinjaman, now()->toDateString(), now()->toTimeString(), ($i % 2 == 0) ? 2 : 1);
         }
     }
 }

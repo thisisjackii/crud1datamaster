@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\RiwayatController;
 
 class PengeluaranSeeder extends Seeder
 {
@@ -13,13 +14,20 @@ class PengeluaranSeeder extends Seeder
      *
      * @return void
      */
+    private $riwayatController;
+
+    public function __construct(RiwayatController $riwayatController)
+    {
+        $this->riwayatController = $riwayatController;
+    }
+
     public function run()
     {
         // You can adjust the number of records you want to seed
-        $numberOfRecords = 10;
+        $numberOfRecords = 2000;
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
-            DB::table('pengeluaran')->insert([
+            $pengeluaran = DB::table('pengeluaran')->insert([
                 'nama_kategori' => 'Category ' . ($i + 1),
                 'nama_pengeluaran' => 'Expense ' . ($i + 1),
                 'tujuan_transaksi' => 'Transaction Purpose ' . ($i + 1),
@@ -31,6 +39,8 @@ class PengeluaranSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            $this->riwayatController->tambahRiwayat('PNG', $pengeluaran, now()->toDateString(), now()->toTimeString(), ($i % 2 == 0) ? 2 : 1);
         }
     }
 }
