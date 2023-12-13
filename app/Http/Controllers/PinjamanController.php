@@ -141,4 +141,34 @@ class PinjamanController extends Controller
         $user_id = auth()->id();
         return (new PinjamanExport)->forUserId($user_id)->download('pinjaman.xlsx');
     }
+
+
+    public function getBelumLunasValue(){
+        $result = Pinjaman::where('user_id', auth()->id())
+                ->where('status', 'Belum Lunas')
+                ->sum('jumlah_pinjaman');
+
+        return $result;
+    }
+
+    public function getSudahLunasValue(){
+        $result = Pinjaman::where('user_id', auth()->id())
+                ->where('status', 'Sudah Lunas')
+                ->sum('jumlah_pinjaman');
+                
+        return $result;
+    }   
+
+    public function totalKategoriPinjaman()
+    {
+        $categoryTotals = Pinjaman::select('status', \DB::raw('SUM(CAST(jumlah_pinjaman AS NUMERIC)) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('status')
+            ->get();
+
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
+    }    
+
 }

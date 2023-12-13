@@ -154,4 +154,33 @@ class HutangController extends Controller
         $user_id = auth()->id();
         return (new HutangExport)->forUserId($user_id)->download('hutang.xlsx');
     }
+
+
+    public function getBelumLunasValue(){
+        $result = Hutang::where('user_id', auth()->id())
+                ->where('status', 'Belum Lunas')
+                ->sum('jumlah_hutang');
+
+        return $result;
+    }
+
+    public function getSudahLunasValue(){
+        $result = Hutang::where('user_id', auth()->id())
+                ->where('status', 'Sudah Lunas')
+                ->sum('jumlah_hutang');
+                
+        return $result;
+    }    
+
+    public function totalKategoriHutang()
+    {
+        $categoryTotals = Hutang::select('status', \DB::raw('SUM(CAST(jumlah_hutang AS NUMERIC)) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('status')
+            ->get();
+
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
+    }    
 }
