@@ -1,10 +1,7 @@
 @extends('layouts.base_admin.base_dashboard')
 @section('judul', 'List Akun')
 @section('script_head')
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
@@ -27,81 +24,78 @@
     </div>
 </section>
 
-    <section class="content">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"></h3>
-                <div class="card-tools">
-                    <button
-                        type="button"
-                        class="btn btn-tool"
-                        data-card-widget="collapse"
-                        title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-tool"
-                        data-card-widget="remove"
-                        title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body p-0" style="margin: 20px">
-            <form method="post" action="{{route('report.index')}}">
-            @csrf
-                <input type="submit" value="Cetak Word">
-            </form>
-
-            <form method="post" action="{{route('importpengeluaran.index')}}" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="file">Upload Excel File:</label>
-                    <input type="file" name="file" id="file" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-info">Upload</button>
-            </form>
-
-
-            <a href="{{route('pengeluaran.export')}}">
-                <button>tset</button>
-            </a>
-
-            <a href="{{route('pengeluaran.exportPdf')}}">
-                <button>Save PDF</button>
-            </a>            
-                <table
-                    id="previewPengeluaran"
-                    class="table table-striped table-bordered display"
-                    style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Nama Kategori</th>
-                            <th>Nama Pengeluaran</th>
-                            <th>Tujuan Transaksi</th>
-                            <th>Kuantitas</th>
-                            <th>Harga per Item</th>
-                            <th>Tanggal</th>
-                            <th>Jam</th>
-                            <th>Opsi</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"></h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         </div>
-    </section>
+        <div class="card-body p-0" style="margin: 20px">
+
+            <div class="d-flex flex-row bd-highlight mb-4">
+                <div class="p-2">
+                    <form method="post" action="{{route('report.index')}}">
+                        @csrf
+                        <input type="submit" value="Cetak Word" class="input-group-text text-bg-primary">
+                    </form>
+                </div>
+
+                <div class="p-2">
+                    <a href="{{route('pengeluaran.export')}}">
+                        <button class="input-group-text text-bg-primary">Save Excel</button>
+                    </a>
+                </div>
+
+                <div class="p-2">
+                    <a href="{{route('pengeluaran.exportPdf')}}">
+                        <button class="input-group-text text-bg-primary">Save PDF</button>
+                    </a>
+                </div>
+
+                <div class="p-2">
+                    <form method="post" action="{{route('importpengeluaran.index')}}" enctype="multipart/form-data" class="form-inline">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <input type="file" name="file" id="file" class="form-control">
+                        </div>
+                        <div class="form-group mb-2 ml-2">
+                            <button type="submit" class="input-group-text text-bg-primary">Upload CSV</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <table id="previewPengeluaran" class="table table-striped table-bordered display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nomor</th>
+                        <th>Nama Kategori</th>
+                        <th>Nama Pengeluaran</th>
+                        <th>Tujuan Transaksi</th>
+                        <th>Kuantitas</th>
+                        <th>Harga per Item</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Opsi</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</section>
 @endsection
 
 @section('script_footer')
-<script
-    type="text/javascript"
-    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script
-    type="text/javascript"
-    src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#previewPengeluaran').DataTable({
@@ -132,7 +126,7 @@
                     "data": "tanggal"
                 }, {
                     "data": "jam"
-                },{
+                }, {
                     "data": "options"
                 }
             ],
@@ -162,40 +156,40 @@
             }
         });
 
-                // hapus data
-                $('#previewPengeluaran').on('click', '.hapusData', function () {
-                    var id = $(this).data("id");
-                    var url = $(this).data("url");
-                    Swal
-                        .fire({
-                            title: 'Apa kamu yakin?',
-                            text: "Kamu tidak akan dapat mengembalikan ini!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Ya, hapus!',
-                            cancelButtonText: 'Batal'
-                        })
-                        .then((result) => {
-                            if (result.isConfirmed) {
+        // hapus data
+        $('#previewPengeluaran').on('click', '.hapusData', function () {
+            var id = $(this).data("id");
+            var url = $(this).data("url");
+            Swal
+                .fire({
+                    title: 'Apa kamu yakin?',
+                    text: "Kamu tidak akan dapat mengembalikan ini!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        // console.log();
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                "id": id,
+                                "_token": "{{csrf_token()}}"
+                            },
+                            success: function (response) {
                                 // console.log();
-                                $.ajax({
-                                    url: url,
-                                    type: 'DELETE',
-                                    data: {
-                                        "id": id,
-                                        "_token": "{{csrf_token()}}"
-                                    },
-                                    success: function (response) {
-                                        // console.log();
-                                        Swal.fire('Terhapus!', response.msg, 'success');
-                                        $('#previewPengeluaran').DataTable().ajax.reload();
-                                    }
-                                });
+                                Swal.fire('Terhapus!', response.msg, 'success');
+                                $('#previewPengeluaran').DataTable().ajax.reload();
                             }
-                        })
-                });
+                        });
+                    }
+                })
         });
+    });
 </script>
 @endsection

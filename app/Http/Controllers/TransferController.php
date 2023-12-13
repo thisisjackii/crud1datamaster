@@ -133,4 +133,26 @@ class TransferController extends Controller
 
         return (new TransferExport)->forUserId($user_id)->download('transfer.xlsx');
     }
+
+    public function jumlahTransfer()
+    {
+        $sumOfJumlahTransfer = TransferSaldo::where('user_id', auth()->id())
+            ->sum(\DB::raw('CAST(jumlah_transfer AS NUMERIC) + CAST(biaya_admin AS NUMERIC)'));
+
+        $formattedTransfer = 'Rp' . number_format($sumOfJumlahTransfer, 2, ',', '.');
+
+        return $sumOfJumlahTransfer;
+    }
+
+    public function totalKategoriTransfer()
+    {
+        $categoryTotals = TransferSaldo::select('tujuan_transfer', \DB::raw('SUM(CAST(jumlah_transfer AS NUMERIC) + CAST(biaya_admin AS NUMERIC)) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('tujuan_transfer')
+            ->get();
+
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
+    }
 }

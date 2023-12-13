@@ -51,28 +51,42 @@
             </div>
         </div>
         <div class="card-body p-0" style="margin: 20px">
-            <form method="post" action="{{route('report.index')}}">
-            @csrf
-                <input type="submit" value="Cetak Word">
-            </form>
 
-            <form method="post" action="{{route('import.index')}}" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="file">Upload Excel File:</label>
-                    <input type="file" name="file" id="file" class="form-control">
+            <div class="d-flex flex-row bd-highlight mb-4">
+                <div class="p-2">
+                    <form method="post" action="{{route('report.index')}}">
+                    @csrf
+                        <input type="submit" value="Cetak Word" class="input-group-text text-bg-primary">
+                    </form>                
                 </div>
-                <button type="submit" class="btn btn-info">Upload</button>
-            </form>
+                
+                <div class="p-2">
+                    <a href="{{route('pinjaman.export')}}">
+                        <button class="input-group-text text-bg-primary">Save Excel</button>
+                    </a>                
+                </div>
+                
+                <div class="p-2">
+                    <a href="{{route('pinjaman.exportPdf')}}">
+                        <button class="input-group-text text-bg-primary">Save PDF</button>
+                    </a>                
+                </div>
+                
+                <div class="p-2">
+                    <form method="post" action="{{route('import.index')}}" enctype="multipart/form-data" class="form-inline">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <input type="file" name="file" id="file" class="form-control">
+                        </div>
+                        <div class="form-group mb-2 ml-2">
+                            <button type="submit" class="input-group-text text-bg-primary">Upload CSV</button>
+                        </div>
+                    </form>                
+                </div>
+
+            </div>
 
 
-            <a href="{{route('pinjaman.export')}}">
-                <button>tset</button>
-            </a>
-
-            <a href="{{route('pinjaman.exportPdf')}}">
-                <button>Save PDF</button>
-            </a>
             <table
                 id="previewPinjaman"
                 class="table table-striped table-bordered display"

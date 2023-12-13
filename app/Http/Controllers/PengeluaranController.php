@@ -143,7 +143,7 @@ class PengeluaranController extends Controller
 
         $formattedPengeluaran = 'Rp' . number_format($sumOfJumlahPengeluaran, 2, ',', '.');
 
-        return $formattedPengeluaran;
+        return $sumOfJumlahPengeluaran;
     }
 
 
@@ -154,6 +154,8 @@ class PengeluaranController extends Controller
             ->groupBy('nama_kategori')
             ->get();
 
-        return $categoryTotals;
+            $formattedData = json_encode($categoryTotals);
+
+            return $formattedData;
     }
 }

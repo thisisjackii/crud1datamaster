@@ -34,8 +34,10 @@ class PemasukanController extends Controller
                     $urlEdit = route('pemasukan.edit', ['id' => $row->id]);
                     $urlDelete = route('pemasukan.delete', ['id' => $row->id]);
 
-                    $btn = "<a href='{$urlEdit}' class='btn btn-primary btn-sm'>Edit</a>";
-                    $btn .= "<button class='btn btn-danger btn-sm hapusData' data-id='{$row->id}' data-url='{$urlDelete}'>Delete</button>";
+                    $btn = "<a href='{$urlEdit}'><i class='fas fa-edit fa-lg'></i></a>";
+                    $btn .= "<a style='border: none; background-color:transparent;' class='hapusData' data-id='{$row->id}' data-url='{$urlDelete}'>
+                        <i class='fas fa-trash fa-lg text-danger'></i>
+                    </a>";
 
                     return $btn;
                 })
@@ -133,7 +135,7 @@ class PemasukanController extends Controller
         $sumOfJumlahPemasukan = Pemasukan::where('user_id', auth()->id())->sum('jumlah_pemasukan');
         $formattedPemasukan = 'Rp' . number_format($sumOfJumlahPemasukan, 2, ',', '.');
 
-        return $formattedPemasukan;
+        return $sumOfJumlahPemasukan;
     }
     public function totalKategoriPemasukan()
     {
